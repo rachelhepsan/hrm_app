@@ -1,0 +1,111 @@
+/* COMMON CSS CLASSES */
+.flexBox {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    border: none;
+}
+
+/* HEADER */
+
+header {
+    width: 100%;
+    background-color: #075E54;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+}
+
+#logo {
+    margin-left: 30px;
+    padding: 8px;
+    color: #ECBC0D;
+    font-size: 30px;
+    font-weight: 900;
+    border: 2px solid #ECBC0D;
+    border-radius: 5px;
+}
+
+.headerMenu {
+    color: #fff;
+    font-size: 18px;
+    padding: 20px;
+}
+
+.headerMenu:hover {
+    color: #ECBC0D;
+    font-size: 20px;
+}
+
+/* BODY SECTION */
+
+.hrmButtons {
+    padding: 10px 20px;
+    background-color: #075E54;
+    color: #fff;
+    font-size: 16px;
+}
+
+.buttonSection {
+    margin-top: 50px;
+}
+
+#filterButton {
+    margin-left: 50px;
+}
+
+table {
+    font-family: arial, sans-serif;
+    width: 100%;
+    margin-top: 50px;
+}
+  
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+  
+tr {
+    background-color: #dddddd;
+}
+
+.buttonBox {
+    display: flex;
+    justify-content: space-around;
+}
+
+.editButton {
+    padding: 5px;
+    background-color: #075E54;
+    font-size: 16px;
+    color: #fff;
+}
+
+.deleteButton {
+    padding: 5px;
+    background-color: #FE0000;
+    font-size: 16px;
+    color: #fff;
+}
+
+/* FOOTER */
+
+#footerLogo {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  footer{
+    background-color: #075E54;
+    margin-top: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  #footerLogo span{
+    color: #ECBC0D;
+  }
