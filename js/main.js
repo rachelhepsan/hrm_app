@@ -56,7 +56,7 @@ function listTables() {
         buttonDiv.setAttribute("class", "buttonBox");
         editBtn.setAttribute("class", "editButton");
         deleteBtn.setAttribute("class", "deleteButton");
-
+        
         tableRow.appendChild(skillRow);
         buttonDiv.appendChild(editBtn);
         buttonDiv.appendChild(deleteBtn);
