@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/71cb3853f5.js" crossorigin="anonymous"></script>
+    <title>HRM App</title>
+</head>
+<body>
+    <header>
+        <div class="flexBox">
+            <p id="logo">HRM App</p>
+            <div class="flexBox">
+                <p class="headerMenu">HOME</p>
+                <p class="headerMenu">SERVICE</p>
+                <P class="headerMenu">CONTACT</P>
+            </div>
+        </div>
+    </header>
+    <section class="buttonSection flexBox">
+        <div>
+            <button class="hrmButtons" id="sortButton">Sort by</button>
+            <button class="hrmButtons" id="filterButton">Filter by</button>
+        </div>
+        <button class="hrmButtons" id="addButton">Add</button>
+    </section>
+    <section class="tableSection">
+        <table id="tableOfEmployees">
+            <tr>
+                <th>Employee Id</th>
+                <th>Employee Name</th>
+                <th>Designation</th>
+                <th>Date of Birth</th>
+                <th>Email id</th>
+                <th>Skills</th>
+                <th></th>
+            </tr>
+        </table>
+    </section>
+    <footer id="footer"></footer>
+    <script src="js/main.js"></script>
+</body>
+</html>
