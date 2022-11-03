@@ -38,7 +38,36 @@
                 <th></th>
             </tr>
         </table>
-    </section> 
+    </section>
+    <div id="addModal" class="modal">
+        <div class="modalContent">
+            <div class="modalHeader flexBox">
+                <p class="modalHeading">Add Employee Details</p>
+                <span class="close">&times;</span>
+            </div>
+            <form class="formBox">
+                <div class="label">
+                    <label for="empId">Employee ID:</label><br>
+                    <label for="empName">Employee Name:</label><br>
+                    <label for="dsgn">Designation:</label><br>
+                    <label for="dob">Date of Birth:</label><br>
+                    <label for="mailid">Email id:</label><br>
+                    <label for="skills">Skills:</label><br>
+                </div>
+                <div class="input">
+                    <input type="text" id="empId" name="Employee ID:"><br>
+                    <input type="text" id="empName" name="Employee Name:"><br>
+                    <input type="text" id="dsgn" name="Designation:"><br>
+                    <input type="date" id="dob" name="Date of Birth:"><br>
+                    <input type="email" id="mailid" name="Email id:"><br>
+                    <input type="text" id="skills" name="Skills:">
+                </div>
+            </form>
+            <div class="modalButton">
+                <button class="hrmButtons" id="addModalButton">Add</button>
+            </div>
+        </div>
+    </div>  
     <footer id="footer"></footer>
     <script src="js/main.js"></script>
 </body>
