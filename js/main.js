@@ -1,9 +1,13 @@
+let tableData = JSON.parse(localStorage.getItem("tData"));
+let modal = document.getElementById("addModal");
+// localStorage.clear();
 const getTableData = () => {
     fetch('json/details.json')
         .then(response => response.json())
         .then(data => {
             if (Array.isArray(data) && data.length) {
                 localStorage.setItem("tData", JSON.stringify(data));
+                listTables();
             }
             else {
                 alert("no data");
@@ -20,12 +24,22 @@ const getTableData = () => {
         })
 }
 
-if(localStorage.getItem("tData")) {
-    getTableData(); 
+
+initData();
+
+function initData() {
+    if(!(localStorage.getItem("tData"))) {
+        getTableData(); 
+    }
+    else {
+        listTables();
+    }
+    footerData();
+    addModal();
 }
 
 function listTables() {
-    const tableData = JSON.parse(localStorage.getItem("tData"));
+    
     let parent = document.getElementById("tableOfEmployees");
 
     tableData.forEach((rowData) => {
@@ -57,7 +71,9 @@ function listTables() {
 
         buttonDiv.setAttribute("class", "buttonBox");
         editBtn.setAttribute("class", "editButton");
+        editBtn.setAttribute("id", rowData.employeeId);
         deleteBtn.setAttribute("class", "deleteButton");
+        deleteBtn.setAttribute("id", rowData.employeeId);
 
         tableRow.appendChild(skillRow);
         buttonDiv.appendChild(editBtn);
@@ -67,7 +83,6 @@ function listTables() {
         parent.appendChild(tableRow);
     });
 }
-listTables();
 
 function footerData() {
     const parent = document.getElementById("footer");
@@ -78,10 +93,9 @@ function footerData() {
     pTag.setAttribute("class", "footerLogo");
     parent.appendChild(pTag);
 }
-footerData();
 
 function addModal() {
-    let modal = document.getElementById("addModal");
+    
     let button = document.getElementById("addButton");
     let span = modal.querySelector(".close");
     let addModalBtn = document.getElementById("addModalButton");
@@ -101,10 +115,9 @@ function addModal() {
     }
 
 }
-addModal();
 
 function addEmployee() {
-    let modal = document.getElementById("addModal");
+   
     let empId = document.getElementById("empId").value;
     let empName = document.getElementById("empName").value;
     let dsgn = document.getElementById("dsgn").value;
@@ -112,7 +125,7 @@ function addEmployee() {
     let mail = document.getElementById("mailid").value;
     let skills = document.getElementById("skills").value;
 
-    if (empId == "" || empName == "" || dsgn == "" || dob == "" || mail == "" || skills == "") {
+    if (empId === "" || empName === "" || dsgn === "" || dob === "" || mail === "" || skills === "") {
         alert("Enter all input fields");
     } 
     else {
@@ -138,7 +151,7 @@ function addEmployee() {
 }
 
 function addEmployeeData(rowData) {
-    let tableData = JSON.parse(localStorage.getItem("tData"));
+    
     tableData.push(rowData);
     localStorage.setItem("tData", JSON.stringify(tableData));
 
@@ -170,7 +183,9 @@ function addEmployeeData(rowData) {
 
     buttonDiv.setAttribute("class", "buttonBox");
     editBtn.setAttribute("class", "editButton");
+    editBtn.setAttribute("data-id", rowData.employeeId);
     deleteBtn.setAttribute("class", "deleteButton");
+    deleteBtn.setAttribute("data-id", rowData.employeeId);
 
     tableRow.appendChild(skillRow);
     buttonDiv.appendChild(editBtn);
@@ -202,3 +217,65 @@ function mailValidation(mailVal) {
     }
 }
 
+function updateButton() {
+    let modal = document.getElementById("updateModal");
+    let button = document.querySelectorAll(".editButton");
+    console.log(button);
+    let span = modal.querySelector(".close");
+    let updateModalBtn = document.getElementById("updateModalButton");
+    span.onclick = () => {
+        modal.style.display = "none";
+    }
+    button.forEach((btn) => {
+        btn.onclick = () => {
+            modal.style.display = "block";
+            console.log(btn.id);
+            updateEmployee(btn.id);
+        }
+    })
+    updateModalBtn.onclick = () => {
+        modal.style.display = "none";
+    }
+    window.addEventListener("click", (event) => {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    })
+}
+updateButton();
+
+function updateEmployee(id) {
+    let updateBtn = document.getElementById("updateModalButton");
+    let tableData = JSON.parse(localStorage.getItem("tData"));
+    tableData.forEach((rowData) => {
+        if (id == rowData.employeeId) {
+            document.getElementById("empIdU").value = rowData.employeeId;
+            document.getElementById("empNameU").value = rowData.employeeName;
+            document.getElementById("dsgnU").value = rowData.designation;
+            document.getElementById("dobU").value = rowData.dateOfBirth;
+            document.getElementById("mailidU").value = rowData.emailId;
+            let skill = '';
+            rowData.skills.forEach((skillData) => {
+                const length = rowData.skills.length;
+                (length - 1) == rowData.skills.indexOf(skillData) ?
+                    skill += skillData.skillName :
+                    skill += `${skillData.skillName},`;
+            })
+            document.getElementById("skillsU").value = skill;
+        }
+        updateBtn.addEventListener("click", () => {
+            let tableData = JSON.parse(localStorage.getItem("tData"));
+            tableData.forEach((rowData => {
+                if(id == rowData.employeeId) {
+                    rowData.employeeId = document.getElementById("empIdU").value;
+                    rowData.employeeName = document.getElementById("empNameU").value;
+                    rowData.designation = document.getElementById("dsgnU").value;
+                    rowData.dateOfBirth = document.getElementById("dobU").value;
+                    rowData.emailId = document.getElementById("mailidU").value;
+                    localStorage.setItem("tData", JSON.stringify(tableData));
+                    window.location.reload();
+                }
+            }))
+        })
+    })
+}
