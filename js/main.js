@@ -4,7 +4,6 @@ const getTableData = () => {
         .then(data => {
             if (Array.isArray(data) && data.length) {
                 localStorage.setItem("tData", JSON.stringify(data));
-                listTables();
             }
             else {
                 alert("no data");
@@ -20,7 +19,10 @@ const getTableData = () => {
             parent.appendChild(div);
         })
 }
-localStorage.getItem("tData") === null && getTableData();
+
+if(localStorage.getItem("tData")) {
+    getTableData(); 
+}
 
 function listTables() {
     const tableData = JSON.parse(localStorage.getItem("tData"));
@@ -66,6 +68,7 @@ function listTables() {
     });
 }
 listTables();
+
 function footerData() {
     const parent = document.getElementById("footer");
     const date = new Date();
@@ -94,38 +97,51 @@ function addModal() {
         }
     })
     addModalBtn.onclick = () => {
-        modal.style.display = "none";
+        addEmployee();
     }
+
 }
 addModal();
 
 function addEmployee() {
+    let modal = document.getElementById("addModal");
+    let empId = document.getElementById("empId").value;
+    let empName = document.getElementById("empName").value;
+    let dsgn = document.getElementById("dsgn").value;
+    let dob = document.getElementById("dob").value;
+    let mail = document.getElementById("mailid").value;
+    let skills = document.getElementById("skills").value;
 
-    let addModalBtn = document.getElementById("addModalButton");
-    addModalBtn.addEventListener("click", () => {
-        let skills = document.getElementById("skills").value;
-        let employee = {
-            employeeId: document.getElementById("empId").value,
-            employeeName: document.getElementById("empName").value,
-            designation: document.getElementById("dsgn").value,
-            dateOfBirth: document.getElementById("dob").value,
-            emailId: document.getElementById("mailid").value,
-            skills: [
-                {
-                    skillName: skills,
-                    skillId: ""
-                }
-            ]
+    if (empId == "" || empName == "" || dsgn == "" || dob == "" || mail == "" || skills == "") {
+        alert("Enter all input fields");
+    } 
+    else {
+        let value = mailValidation(mail);
+        if (value) {
+            let employee = {
+                employeeId: empId,
+                employeeName: empName,
+                designation: dsgn,
+                dateOfBirth: dob,
+                emailId: mail,
+                skills: [
+                    {
+                        skillName: skills,
+                        skillId: ""
+                    }
+                ]
+            }
+            addEmployeeData(employee);
+            modal.style.display = "none";
         }
-        addEmployeeData(employee);
-    })
+    }
 }
-addEmployee();
 
 function addEmployeeData(rowData) {
     let tableData = JSON.parse(localStorage.getItem("tData"));
     tableData.push(rowData);
-    localStorage.setItem("tData", JSON.stringify(tableData));  
+    localStorage.setItem("tData", JSON.stringify(tableData));
+
     let parent = document.getElementById("tableOfEmployees");
     const tableRow = document.createElement("tr");
     const skillRow = document.createElement("td");
@@ -133,11 +149,13 @@ function addEmployeeData(rowData) {
     const buttonDiv = document.createElement("div");
     const editBtn = document.createElement("button");
     const deleteBtn = document.createElement("button");
+
     tableRow.innerHTML = `<td>${rowData.employeeId}</td>
         <td>${rowData.employeeName}</td>
         <td>${rowData.designation}</td>
         <td>${rowData.dateOfBirth}</td>
         <td>${rowData.emailId}</td>`;
+
     rowData.skills.forEach((skillData) => {
         const spanTag = document.createElement("span");
         const length = rowData.skills.length;
@@ -146,15 +164,41 @@ function addEmployeeData(rowData) {
             spanTag.innerHTML = `${skillData.skillName},`;
         skillRow.appendChild(spanTag);
     })
+
     editBtn.innerHTML = `<i class="fa-regular fa-pen-to-square"></i>`;
     deleteBtn.innerHTML = `<i class="fa-solid fa-trash"></i>`;
+
     buttonDiv.setAttribute("class", "buttonBox");
     editBtn.setAttribute("class", "editButton");
     deleteBtn.setAttribute("class", "deleteButton");
+
     tableRow.appendChild(skillRow);
     buttonDiv.appendChild(editBtn);
     buttonDiv.appendChild(deleteBtn);
     buttonRow.appendChild(buttonDiv);
     tableRow.appendChild(buttonRow);
     parent.appendChild(tableRow);
-} 
+}
+
+function mailValidation(mailVal) {
+
+    let atSymbol = mailVal.indexOf("@");
+    let dot = mailVal.indexOf(".");
+
+    if (atSymbol < 1) {
+        alert("Enter valid email id");
+        return false;
+    }
+    else if (dot <= atSymbol + 2) {
+        alert("Enter valid email id");
+        return false;
+    }
+    else if (dot === mailVal.length - 1) {
+        alert("Enter valid email id");
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
