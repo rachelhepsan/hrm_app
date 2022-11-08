@@ -22,7 +22,8 @@
     <section class="buttonSection flexBox">
         <div>
             <button class="hrmButtons" id="sortButton">Sort by</button>
-            <button class="hrmButtons" id="filterButton">Filter by</button>
+            <input list = "skillSuggestion" class="hrmButtons" id="filterButton"/>
+            <datalist id="skillSuggestion"></datalist>
         </div>
         <button class="hrmButtons" id="addButton">Add</button>
     </section>
@@ -60,7 +61,7 @@
                     <input type="text" id="dsgn" name="Designation:"><br>
                     <input type="date" id="dob" name="Date of Birth:"><br>
                     <input type="text" id="mailid" name="Email id:"><br>
-                    <input type="text" id="skills" name="Skills:">
+                    <input list = "skillSuggestion" type="text" id="skills" name="Skills:">
                 </div>
             </form>
             <div class="modalButton">
@@ -89,7 +90,8 @@
                     <input type="text" id="dsgnU" name="Designation:"><br>
                     <input type="date" id="dobU" name="Date of Birth:"><br>
                     <input type="text" id="mailidU" name="Email id:"><br>
-                    <input type="text" id="skillsU" name="Skills:">
+                    <input list = "skillSuggestion" type="text" id="skillsU" name="Skills:" readonly><br>
+                    <input list = "skillSuggestion" type="text" id="skillUpdateInput" name="Skills:">
                 </div>
             </div>
             <div class="modalButton">

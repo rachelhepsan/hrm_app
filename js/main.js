@@ -1,6 +1,6 @@
 let tableData = JSON.parse(localStorage.getItem("tData"));
 let modal = document.getElementById("addModal");
-// localStorage.clear();
+
 const getTableData = () => {
     fetch('json/details.json')
         .then(response => response.json())
@@ -24,22 +24,33 @@ const getTableData = () => {
         })
 }
 
+const getSkillData = () => {
+    fetch('json/skills.json')
+        .then(response => response.json())
+        .then(data => {
+            localStorage.setItem("sData", JSON.stringify(data));
+            skillSuggestion();
+        })
+}
+
 
 initData();
 
 function initData() {
-    if(!(localStorage.getItem("tData"))) {
-        getTableData(); 
+    if (!(localStorage.getItem("tData"))) {
+        getTableData();
     }
     else {
         listTables();
     }
+    getSkillData();
     footerData();
     addModal();
+    updateButton();
 }
 
 function listTables() {
-    
+
     let parent = document.getElementById("tableOfEmployees");
 
     tableData.forEach((rowData) => {
@@ -62,7 +73,7 @@ function listTables() {
 
             (length - 1) == rowData.skills.indexOf(skillData) ?
                 spanTag.innerHTML = skillData.skillName :
-                spanTag.innerHTML = `${skillData.skillName},`;
+                spanTag.innerHTML = `${skillData.skillName} `;
 
             skillRow.appendChild(spanTag);
         })
@@ -95,7 +106,7 @@ function footerData() {
 }
 
 function addModal() {
-    
+
     let button = document.getElementById("addButton");
     let span = modal.querySelector(".close");
     let addModalBtn = document.getElementById("addModalButton");
@@ -105,7 +116,7 @@ function addModal() {
     span.onclick = () => {
         modal.style.display = "none";
     }
-    window.addEventListener("click", (event) => {
+    modal.addEventListener("click", (event) => {
         if (event.target == modal) {
             modal.style.display = "none";
         }
@@ -117,17 +128,18 @@ function addModal() {
 }
 
 function addEmployee() {
-   
+
     let empId = document.getElementById("empId").value;
     let empName = document.getElementById("empName").value;
     let dsgn = document.getElementById("dsgn").value;
     let dob = document.getElementById("dob").value;
     let mail = document.getElementById("mailid").value;
     let skills = document.getElementById("skills").value;
+    let modal = document.getElementById("addModal");
 
     if (empId === "" || empName === "" || dsgn === "" || dob === "" || mail === "" || skills === "") {
         alert("Enter all input fields");
-    } 
+    }
     else {
         let value = mailValidation(mail);
         if (value) {
@@ -144,14 +156,15 @@ function addEmployee() {
                     }
                 ]
             }
-            addEmployeeData(employee);
             modal.style.display = "none";
+            addEmployeeData(employee);
+
         }
     }
 }
 
 function addEmployeeData(rowData) {
-    
+
     tableData.push(rowData);
     localStorage.setItem("tData", JSON.stringify(tableData));
 
@@ -174,7 +187,7 @@ function addEmployeeData(rowData) {
         const length = rowData.skills.length;
         (length - 1) == rowData.skills.indexOf(skillData) ?
             spanTag.innerHTML = skillData.skillName :
-            spanTag.innerHTML = `${skillData.skillName},`;
+            spanTag.innerHTML = `${skillData.skillName} `;
         skillRow.appendChild(spanTag);
     })
 
@@ -193,12 +206,13 @@ function addEmployeeData(rowData) {
     buttonRow.appendChild(buttonDiv);
     tableRow.appendChild(buttonRow);
     parent.appendChild(tableRow);
+    updateButton();
 }
 
 function mailValidation(mailVal) {
 
     let atSymbol = mailVal.indexOf("@");
-    let dot = mailVal.indexOf(".");
+    let dot = mailVal.lastIndexOf(".");
 
     if (atSymbol < 1) {
         alert("Enter valid email id");
@@ -220,33 +234,29 @@ function mailValidation(mailVal) {
 function updateButton() {
     let modal = document.getElementById("updateModal");
     let button = document.querySelectorAll(".editButton");
-    console.log(button);
     let span = modal.querySelector(".close");
-    let updateModalBtn = document.getElementById("updateModalButton");
     span.onclick = () => {
         modal.style.display = "none";
     }
     button.forEach((btn) => {
         btn.onclick = () => {
             modal.style.display = "block";
-            console.log(btn.id);
             updateEmployee(btn.id);
         }
     })
-    updateModalBtn.onclick = () => {
-        modal.style.display = "none";
-    }
-    window.addEventListener("click", (event) => {
+    modal.addEventListener("click", (event) => {
         if (event.target == modal) {
             modal.style.display = "none";
         }
     })
 }
-updateButton();
+
 
 function updateEmployee(id) {
     let updateBtn = document.getElementById("updateModalButton");
-    let tableData = JSON.parse(localStorage.getItem("tData"));
+    let empId, empName, dsgn, dob, mail, skills;
+    let skill = '';
+
     tableData.forEach((rowData) => {
         if (id == rowData.employeeId) {
             document.getElementById("empIdU").value = rowData.employeeId;
@@ -254,28 +264,61 @@ function updateEmployee(id) {
             document.getElementById("dsgnU").value = rowData.designation;
             document.getElementById("dobU").value = rowData.dateOfBirth;
             document.getElementById("mailidU").value = rowData.emailId;
-            let skill = '';
+
             rowData.skills.forEach((skillData) => {
                 const length = rowData.skills.length;
                 (length - 1) == rowData.skills.indexOf(skillData) ?
                     skill += skillData.skillName :
-                    skill += `${skillData.skillName},`;
+                    skill += `${skillData.skillName} `;
             })
             document.getElementById("skillsU").value = skill;
         }
-        updateBtn.addEventListener("click", () => {
-            let tableData = JSON.parse(localStorage.getItem("tData"));
-            tableData.forEach((rowData => {
-                if(id == rowData.employeeId) {
-                    rowData.employeeId = document.getElementById("empIdU").value;
-                    rowData.employeeName = document.getElementById("empNameU").value;
-                    rowData.designation = document.getElementById("dsgnU").value;
-                    rowData.dateOfBirth = document.getElementById("dobU").value;
-                    rowData.emailId = document.getElementById("mailidU").value;
-                    localStorage.setItem("tData", JSON.stringify(tableData));
-                    window.location.reload();
-                }
-            }))
-        })
+    })
+
+    updateBtn.addEventListener("click", () => {
+        empId = document.getElementById("empIdU").value;
+        empName = document.getElementById("empNameU").value;
+        dsgn = document.getElementById("dsgnU").value;
+        dob = document.getElementById("dobU").value;
+        mail = document.getElementById("mailidU").value;
+        skills = document.getElementById("skillsU").value;
+
+        if (empId === "" || empName === "" || dsgn === "" || dob === "" || mail === "" || skills === "") {
+            alert("Enter all input fields");
+        }
+        else {
+            let value = mailValidation(mail);
+            if (value) {
+                tableData.forEach((rowData => {
+                    if (id == rowData.employeeId) {
+                        let skillObject = {
+                            skillName: document.getElementById("skillUpdateInput").value,
+                            skillId: ""
+                        }
+                        rowData.skills.push(skillObject);
+                        rowData.employeeId = document.getElementById("empIdU").value;
+                        rowData.employeeName = document.getElementById("empNameU").value;
+                        rowData.designation = document.getElementById("dsgnU").value;
+                        rowData.dateOfBirth = document.getElementById("dobU").value;
+                        rowData.emailId = document.getElementById("mailidU").value;
+
+                        localStorage.setItem("tData", JSON.stringify(tableData));
+                        modal.style.display = "none";
+                        window.location.reload();
+                    }
+                }))
+            }
+        }
+    })
+}
+
+function skillSuggestion() {
+    const parent = document.getElementById("skillSuggestion");
+    let skillNames = JSON.parse(localStorage.getItem("sData"));
+    skillNames.forEach((skillObj) => {
+        let options = document.createElement("option");
+        options.innerHTML = skillObj.skill;
+        options.setAttribute("id", skillObj.skillId);
+        parent.appendChild(options);
     })
 }

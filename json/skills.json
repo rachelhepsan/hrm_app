@@ -1,0 +1,22 @@
+[
+    {
+        "skill" : "React",
+        "skillId" : "rea"
+    },
+    {
+        "skill" : "Angular",
+        "skillId" : "ang"
+    },
+    {
+        "skill" : "Javascript",
+        "skillId" : "js"
+    },
+    {
+        "skill" : "Node.js",
+        "skillId" : "njs"
+    },
+    {
+        "skill" : "Python",
+        "skillId" : "pyt"
+    }
+]
