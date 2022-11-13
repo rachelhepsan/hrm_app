@@ -25,7 +25,7 @@
             <input list = "skillSuggestion" class="hrmButtons" id="filterButton"/>
             <datalist id="skillSuggestion"></datalist>
         </div>
-        <button class="hrmButtons" id="addButton">Add</button>
+        <button class="hrmButtons" id="addButton"><i class="fa-solid fa-user-plus"></i></button>
     </section>
     <section class="tableSection">
         <table id="tableOfEmployees">
@@ -46,7 +46,7 @@
                 <p class="modalHeading">Add Employee Details</p>
                 <span class="close">&times;</span>
             </div>
-            <form class="formBox">
+            <form class="formBox" id="addForm">
                 <div class="label">
                     <label for="empId">Employee ID:</label><br>
                     <label for="empName">Employee Name:</label><br>
@@ -61,7 +61,12 @@
                     <input type="text" id="dsgn" name="Designation:"><br>
                     <input type="date" id="dob" name="Date of Birth:"><br>
                     <input type="text" id="mailid" name="Email id:"><br>
-                    <input list = "skillSuggestion" type="text" id="skills" name="Skills:">
+                    <div id="skillBox">
+                        <div id="skillInputBox">
+                            <input type="text" id="skills" name="Skills:">
+                        </div>
+                        <div id="autoSuggestion"></div>
+                    </div>
                 </div>
             </form>
             <div class="modalButton">
@@ -75,7 +80,7 @@
                 <p class="modalHeading">Update Employee Details</p>
                 <span class="close">&times;</span>
             </div>
-            <div class="formBox">
+            <form class="formBox">
                 <div class="label">
                     <label for="empIdU">Employee ID:</label><br>
                     <label for="empNameU">Employee Name:</label><br>
@@ -90,10 +95,12 @@
                     <input type="text" id="dsgnU" name="Designation:"><br>
                     <input type="date" id="dobU" name="Date of Birth:"><br>
                     <input type="text" id="mailidU" name="Email id:"><br>
-                    <input list = "skillSuggestion" type="text" id="skillsU" name="Skills:" readonly><br>
-                    <input list = "skillSuggestion" type="text" id="skillUpdateInput" name="Skills:">
+                    <div id="skillUpdateBox">
+                        <input type="text" id="skillsU" name="Skills:" placeholder size="3">
+                    </div>
+                    <div id="autoSuggestionUpdate"></div>
                 </div>
-            </div>
+            </form>
             <div class="modalButton">
                 <button class="hrmButtons" id="updateModalButton">Update</button>
             </div>

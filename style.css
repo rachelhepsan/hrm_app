@@ -175,6 +175,54 @@ tr {
     text-align: center;
     margin-top: 20px;
  } 
+
+ #skillInputBox {
+    border: 1px solid #000;
+ }
+
+ #skillUpdateBox {
+    border: 1px solid #000;
+ }
+
+ .addSkillSpan {
+    padding: 5px;
+    margin: 2px;
+    background-color: #888;
+ }
+
+ #skillBox {
+    position: relative;
+ }
+
+ #autoSuggestion {
+    position: absolute;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #eee;
+    max-height: 250px;
+    overflow-y: auto;
+ }
+
+ .option {
+    padding: 5px;
+    border-bottom: 1px solid #eee;
+ }
+
+ #skills {
+    flex: 1;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background-color: transparent;
+ }
+
+ #skillsU {
+    flex: 1;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background-color: transparent;
+ }
 /* FOOTER */
 
 footer {

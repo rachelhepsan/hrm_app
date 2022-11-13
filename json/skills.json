@@ -12,6 +12,10 @@
         "skillId" : "js"
     },
     {
+        "skill" : "Java",
+        "skillId" : "jv"
+    },
+    {
         "skill" : "Node.js",
         "skillId" : "njs"
     },
