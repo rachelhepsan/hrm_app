@@ -1,7 +1,9 @@
 const getFromLocalStorage = (keyName) => {
     return localStorage.getItem(keyName);
 }
+
 // localStorage.clear()
+
 let tableData = JSON.parse(getFromLocalStorage("tData"));
 let skillData = JSON.parse(getFromLocalStorage("sData"));
 let modal = document.getElementById("addModal");
