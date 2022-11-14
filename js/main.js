@@ -1,8 +1,9 @@
 const getFromLocalStorage = (keyName) => {
     return localStorage.getItem(keyName);
 }
-
+// localStorage.clear()
 let tableData = JSON.parse(getFromLocalStorage("tData"));
+let skillData = JSON.parse(getFromLocalStorage("sData"));
 let modal = document.getElementById("addModal");
 let skillInput = document.getElementById("skills");
 let updateSkill = document.getElementById("skillsU");
@@ -13,7 +14,6 @@ let skillArray = [];
 
 
 skillInput.addEventListener("input", (e) => {
-    let skillData = JSON.parse(localStorage.getItem("sData"));
     if (e.target.value) {
         const similarSkill = skillData.filter(({ skill }) => skill.toLowerCase().startsWith(e.target.value.toLowerCase()));
         autoSuggestion.innerHTML = "";
@@ -32,7 +32,6 @@ skillInput.addEventListener("input", (e) => {
 })
 
 updateSkill.addEventListener("input", (e) => {
-    let skillData = JSON.parse(localStorage.getItem("sData"));
     if (e.target.value) {
         const similarSkill = skillData.filter(({ skill }) => skill.toLowerCase().startsWith(e.target.value.toLowerCase()));
         autoSuggestionUpdate.innerHTML = "";
@@ -149,11 +148,14 @@ function initData() {
     footerData();
     addModal();
     updateButton();
+    deleteButton();
+    sortTable();
+    filter();
 }
 
 function listTables() {
 
-    let parent = document.getElementById("tableOfEmployees");
+    let parent = document.getElementById("tableBody");
 
     tableData.forEach((rowData) => {
         const tableRow = document.createElement("tr");
@@ -171,6 +173,7 @@ function listTables() {
 
         rowData.skills.forEach((skillData) => {
             const spanTag = document.createElement("span");
+            spanTag.setAttribute("class", "skillSpan");
             const length = rowData.skills.length;
 
             (length - 1) == rowData.skills.indexOf(skillData) ?
@@ -282,7 +285,7 @@ function addEmployeeData(rowData) {
     tableData.push(rowData);
     localStorage.setItem("tData", JSON.stringify(tableData));
 
-    let parent = document.getElementById("tableOfEmployees");
+    let parent = document.getElementById("tableBody");
     const tableRow = document.createElement("tr");
     const skillRow = document.createElement("td");
     const buttonRow = document.createElement("td");
@@ -298,6 +301,7 @@ function addEmployeeData(rowData) {
 
     rowData.skills.forEach((skillData) => {
         const spanTag = document.createElement("span");
+        spanTag.setAttribute("class", "skillSpan");
         const length = rowData.skills.length;
         (length - 1) == rowData.skills.indexOf(skillData) ?
             spanTag.innerHTML = skillData.skillName :
@@ -321,6 +325,7 @@ function addEmployeeData(rowData) {
     tableRow.appendChild(buttonRow);
     parent.appendChild(tableRow);
     updateButton();
+    deleteButton();
 }
 
 function mailValidation(mailVal) {
@@ -383,8 +388,6 @@ function updateEmployee(id) {
                 skillArray.push(skillData.skillName);
             })
             skillArray.forEach(skillELement => {
-                // console.log(skillArray);
-                // skillArray.push(skillELement);
                 let spanSkill = document.createElement("span");
                 let crossIcon = document.createElement("i");
                 spanSkill.innerHTML = skillELement;
@@ -404,7 +407,7 @@ function updateEmployee(id) {
             })
         }
     })
-    // console.log(skill);
+
     updateBtn.addEventListener("click", () => {
         empId = document.getElementById("empIdU").value;
         empName = document.getElementById("empNameU").value;
@@ -451,5 +454,106 @@ function skillSuggestion() {
         options.innerHTML = skillObj.skill;
         options.setAttribute("id", skillObj.skillId);
         parent.appendChild(options);
+    })
+}
+
+function deleteButton() {
+    let modal = document.getElementById("deleteModal");
+    let button = document.querySelectorAll(".deleteButton");
+    let close = document.getElementById("deleteNo");
+    let yesBtn = document.getElementById("deleteYes");
+    let span = modal.querySelector(".close");
+
+    span.onclick = () => {
+        modal.style.display = "none";
+    }
+    close.onclick = () => {
+        modal.style.display = "none";
+    }
+    yesBtn.onclick = () => {
+        modal.style.display = "none";
+    }
+    button.forEach((btn) => {
+        btn.onclick = () => {
+            modal.style.display = "block";
+            deleteEmployee(btn.id);
+        }
+    })
+    window.addEventListener("click", (event) => {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    })
+}
+
+function deleteEmployee(id) {
+    let deleteBtn = document.getElementById("deleteYes");
+
+    deleteBtn.addEventListener("click", () => {
+        tableData.forEach((rowData) => {
+            if (id == rowData.employeeId) {
+                const index = tableData.indexOf(rowData);
+                tableData.splice(index, 1);
+                localStorage.setItem("tData", JSON.stringify(tableData));
+                listTables();
+                window.location.reload();
+            }
+        });
+    })
+}
+
+function sortTable() {
+    let sortSelect = document.getElementById("sortButton");
+    let value;
+    sortSelect.addEventListener("change", () => {
+        value = sortSelect.value;
+        value === "empIdSort" ? sortById() : sortByName();
+        window.location.reload();
+    })
+
+}
+
+function sortById() {
+    let tableData = JSON.parse(localStorage.getItem("tData"));
+    tableData.sort((a, b) => {
+        return a.employeeId - b.employeeId;
+    });
+    localStorage.setItem("tData", JSON.stringify(tableData));
+}
+
+function sortByName() {
+    let tableData = JSON.parse(localStorage.getItem("tData"));
+    tableData.sort((a, b) => {
+        let ea = a.employeeName.toLowerCase(),
+            eb = b.employeeName.toLowerCase();
+        if (ea < eb) {
+            return -1;
+        }
+        if (ea > eb) {
+            return 1;
+        }
+        return 0;
+    });
+    localStorage.setItem("tData", JSON.stringify(tableData));
+}
+
+
+function filter() {
+    let filterButton = document.getElementById("filterButton");
+    filterButton.addEventListener("keyup", () => {
+        filterTable(filterButton.value);
+    })
+}
+
+function filterTable(value) {
+    let rows = document.querySelectorAll("#tableBody tr");
+    console.log(rows);
+    rows.forEach((row) => {
+        let skillSpan = row.querySelectorAll(".skillSpan");
+        let isAvailable = false;
+        skillSpan.forEach((span) => {
+            span.textContent.toLowerCase().startsWith(value.toLowerCase()) && (isAvailable = true)
+        })
+        isAvailable ? (row.style.display = "") : (row.style.display = "none");
     })
 }
