@@ -84,6 +84,7 @@ tr {
     background-color: #075E54;
     font-size: 16px;
     color: #fff;
+    cursor: pointer;
 }
 
 .deleteButton {
@@ -91,6 +92,7 @@ tr {
     background-color: #FE0000;
     font-size: 16px;
     color: #fff;
+    cursor: pointer;
 }
 
 .errorDiv{
@@ -113,7 +115,7 @@ tr {
 
 .modal {
     display: none;
-    position: fixed;
+    position: absolute;
     z-index: 1;
     padding-top: 100px;
     left: 0;
@@ -192,6 +194,7 @@ tr {
 
  #skillBox {
     position: relative;
+    width: 270px;
  }
 
  #autoSuggestion {
@@ -223,6 +226,36 @@ tr {
     outline: none;
     background-color: transparent;
  }
+
+ #deleteContent {
+    font-size: 25px;
+    padding-left: 20px;
+}
+
+.delBtns {
+    display: flex;
+    justify-content: center;
+}
+
+#deleteYes {
+    padding: 10px 20px;
+    background-color: #FE0000;
+    color: #fff;
+    font-size: 18px;
+    margin-left: 20px;
+}
+
+#deleteNo {
+    padding: 10px 20px;
+    background-color: #888;
+    color: #fff;
+    font-size: 18px;
+    margin-right: 20px;
+}
+
+::placeholder {
+    color: #fff;
+}
 /* FOOTER */
 
 footer {
