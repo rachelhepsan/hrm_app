@@ -2,9 +2,12 @@ const getFromLocalStorage = (keyName) => {
     return localStorage.getItem(keyName);
 }
 
+
 let tableData = JSON.parse(getFromLocalStorage("tData"));
 let skillData = JSON.parse(getFromLocalStorage("sData"));
 let modal = document.getElementById("addModal");
+let deleteModal = document.getElementById("deleteModal");
+let updateModal = document.getElementById("updateModal");
 let skillInput = document.getElementById("skills");
 let updateSkill = document.getElementById("skillsU");
 let autoSuggestion = document.getElementById("autoSuggestion");
@@ -185,14 +188,21 @@ function listTables() {
 
             skillRow.appendChild(spanTag);
         })
-        editBtn.innerHTML = `<i class="fa-regular fa-pen-to-square"></i>`;
-        deleteBtn.innerHTML = `<i class="fa-solid fa-trash"></i>`;
+        editBtn.innerHTML = `<i class="fa-regular fa-pen-to-square" id=edt-${rowData.employeeId}></i>`;
+        deleteBtn.innerHTML = `<i class="fa-solid fa-trash" id=del-${rowData.employeeId}></i>`;
 
         buttonDiv.setAttribute("class", "buttonBox");
+        buttonDiv.addEventListener("click", (event) => {
+            let action = event.target.id.split("-");
+            if(action[0] === "edt") {
+                updateEmployee(action[1]);
+            }
+            else {
+                deleteEmployee(action[1]);
+            }
+        })
         editBtn.setAttribute("class", "editButton");
-        editBtn.setAttribute("id", rowData.employeeId);
         deleteBtn.setAttribute("class", "deleteButton");
-        deleteBtn.setAttribute("id", rowData.employeeId);
 
         tableRow.appendChild(skillRow);
         buttonDiv.appendChild(editBtn);
@@ -315,10 +325,17 @@ function addEmployeeData(rowData) {
     deleteBtn.innerHTML = `<i class="fa-solid fa-trash"></i>`;
 
     buttonDiv.setAttribute("class", "buttonBox");
+    buttonDiv.addEventListener("click", (event) => {
+        let action = event.target.id.split("-");
+        if(action[0] === "edt") {
+            updateEmployee(action[1]);
+        }
+        else {
+            deleteEmployee(action[1]);
+        }
+    })
     editBtn.setAttribute("class", "editButton");
-    editBtn.setAttribute("data-id", rowData.employeeId);
     deleteBtn.setAttribute("class", "deleteButton");
-    deleteBtn.setAttribute("data-id", rowData.employeeId);
 
     tableRow.appendChild(skillRow);
     buttonDiv.appendChild(editBtn);
@@ -354,18 +371,10 @@ function mailValidation(mailVal) {
 
 function updateButton() {
     let modal = document.getElementById("updateModal");
-    let span = document.getElementById("updateClose");
-    let buttonList = document.getElementsByClassName("editButton");
-
-    span.onclick = () => {
+    let updateClose = document.getElementById("updateClose");
+    updateClose.onclick = () => {
         modal.style.display = "none";
         skillReset();
-    }
-    for(btn of buttonList) {
-        btn.onclick = () => {
-            modal.style.display = "block";
-            updateEmployee(btn.id);
-        }
     }
     modal.addEventListener("click", (event) => {
         if (event.target == modal) {
@@ -447,6 +456,7 @@ function updateEmployee(id) {
             }
         }
     })
+    updateModal.style.display = "block";
 }
 
 function skillSuggestion() {
@@ -462,7 +472,6 @@ function skillSuggestion() {
 
 function deleteButton() {
     let modal = document.getElementById("deleteModal");
-    let buttonList = document.getElementsByClassName("deleteButton");
     let close = document.getElementById("deleteNo");
     let yesBtn = document.getElementById("deleteYes");
     let deleteClose = document.getElementById("deleteClose");
@@ -476,12 +485,6 @@ function deleteButton() {
     yesBtn.onclick = () => {
         modal.style.display = "none";
     }
-    for(btn of buttonList) {
-        btn.onclick = () => {
-            modal.style.display = "block";
-            deleteEmployee(btn.id);
-        }
-    }
     modal.addEventListener("click", (event) => {
         if (event.target == modal) {
             modal.style.display = "none";
@@ -490,6 +493,7 @@ function deleteButton() {
 }
 
 function deleteEmployee(id) {
+
     let deleteBtn = document.getElementById("deleteYes");
 
     deleteBtn.addEventListener("click", () => {
@@ -503,6 +507,7 @@ function deleteEmployee(id) {
             }
         });
     })
+    deleteModal.style.display = "block";
 }
 
 function sortTable() {
