@@ -13,10 +13,12 @@ let autoSuggestion = document.getElementById("autoSuggestion");
 let autoSuggestionUpdate = document.getElementById("autoSuggestionUpdate");
 let skillInputBox = document.getElementById("skillInputBox");
 let skillArray = [];
-
+let skillArr =[];
+const deleteKey = "del";
+const editKey = "edt";
 
 skillInput.addEventListener("input", (e) => {
-    if (!(e.target.value === "")) {
+    if (e.target.value !== "") {
         const similarSkill = skillData.filter(({ skill }) => skill.toLowerCase().startsWith(e.target.value.toLowerCase()));
         autoSuggestion.innerHTML = "";
         similarSkill.forEach(({ skill, skillId }) => {
@@ -37,7 +39,7 @@ skillInput.addEventListener("input", (e) => {
 })
 
 updateSkill.addEventListener("input", (e) => {
-    if (e.target.value) {
+    if (e.target.value !== "") {
         const similarSkill = skillData.filter(({ skill }) => skill.toLowerCase().startsWith(e.target.value.toLowerCase()));
         autoSuggestionUpdate.innerHTML = "";
         similarSkill.forEach(({ skill, skillId }) => {
@@ -52,10 +54,19 @@ updateSkill.addEventListener("input", (e) => {
         })
         autoSuggestionUpdate.style.display = "block";
     }
+    else {
+        autoSuggestion.style.display = "none";
+    }
 })
 
 function addEmployeeSkill(element) {
-    skillArray.push(element.target.innerHTML);
+    let skillElem = {
+        skillName: element.target.innerHTML,
+        skillId: element.target.id
+    };
+    skillArray.push(skillElem);
+    console.log(skillArray);
+    skillArr.push(element.target.innerHTML);
     let spanSkill = document.createElement("span");
     let crossIcon = document.createElement("i");
     spanSkill.innerHTML = element.target.innerHTML;
@@ -65,9 +76,9 @@ function addEmployeeSkill(element) {
     spanSkill.appendChild(crossIcon);
     crossIcon.addEventListener("click", () => {
         let skill = crossIcon.getAttribute("id");
-        if (skillArray.includes(skill)) {
-            let index = skillArray.indexOf(skill);
-            skillArray.splice(index, 1);
+        if (skillArr.includes(skill)) {
+            let index = skillArr.indexOf(skill);
+            skillArr.splice(index, 1);
             spanSkill.remove();
         }
     })
@@ -77,7 +88,11 @@ function addEmployeeSkill(element) {
 }
 
 function updateEmployeeSkill(element) {
-    skillArray.push(element.target.innerHTML);
+    let skillElem = {
+        skillName: element.target.innerHTML,
+        skillId: element.target.id
+    };
+    skillArray.push(skillElem);
     let spanSkill = document.createElement("span");
     let crossIcon = document.createElement("i");
     spanSkill.innerHTML = element.target.innerHTML;
@@ -85,13 +100,9 @@ function updateEmployeeSkill(element) {
     crossIcon.setAttribute("class", "fa-solid fa-xmark");
     crossIcon.setAttribute("id", element.target.innerHTML);
     spanSkill.appendChild(crossIcon);
-    crossIcon.addEventListener("click", () => {
+    crossIcon.addEventListener("click", (element) => {
         let skill = crossIcon.getAttribute("id");
-        if (skillArray.includes(skill)) {
-            let index = skillArray.indexOf(skill);
-            skillArray.splice(index, 1);
-            spanSkill.remove();
-        }
+        removeSkill(element);
     })
     skillUpdateBox.prepend(spanSkill);
     updateSkill.value = "";
@@ -187,16 +198,16 @@ function listTables() {
 
             skillRow.appendChild(spanTag);
         })
-        editBtn.innerHTML = `<i class="fa-regular fa-pen-to-square" id=edt-${rowData.employeeId}></i>`;
-        deleteBtn.innerHTML = `<i class="fa-solid fa-trash" id=del-${rowData.employeeId}></i>`;
+        editBtn.innerHTML = `<i class="fa-regular fa-pen-to-square" id=${editKey}-${rowData.employeeId}></i>`;
+        deleteBtn.innerHTML = `<i class="fa-solid fa-trash" id=${deleteKey}-${rowData.employeeId}></i>`;
 
         buttonDiv.setAttribute("class", "buttonBox");
         buttonDiv.addEventListener("click", (event) => {
             let action = event.target.id.split("-");
-            if(action[0] === "edt") {
+            if (action[0] === editKey) {
                 updateEmployee(action[1]);
             }
-            else if(action[0] === "del") {
+            else if (action[0] === deleteKey) {
                 deleteEmployee(action[1]);
             }
         })
@@ -225,6 +236,7 @@ function footerData() {
 function skillReset() {
     document.querySelectorAll(".addSkillSpan").forEach(span => {
         span.remove();
+        console.log(span);
     })
 }
 
@@ -268,8 +280,8 @@ function addEmployee() {
         alert("Enter all input fields");
     }
     else {
-        let value = mailValidation(mail);
-        if (value) {
+        let isValidMail = mailValidation(mail);
+        if (isValidMail) {
             let employee = {
                 employeeId: empId,
                 employeeName: empName,
@@ -278,10 +290,11 @@ function addEmployee() {
                 emailId: mail,
                 skills: []
             }
+            console.log(skillArray);
             skillArray.forEach((skillElement) => {
                 let skillObject = {
-                    skillName: skillElement,
-                    skillId: ""
+                    skillName: skillElement.skillName,
+                    skillId: skillElement.skillId
                 }
                 employee.skills.push(skillObject);
             })
@@ -326,7 +339,7 @@ function addEmployeeData(rowData) {
     buttonDiv.setAttribute("class", "buttonBox");
     buttonDiv.addEventListener("click", (event) => {
         let action = event.target.id.split("-");
-        if(action[0] === "edt") {
+        if (action[0] === "edt") {
             updateEmployee(action[1]);
         }
         else {
@@ -342,8 +355,6 @@ function addEmployeeData(rowData) {
     buttonRow.appendChild(buttonDiv);
     tableRow.appendChild(buttonRow);
     parent.appendChild(tableRow);
-    updateButton();
-    deleteButton();
 }
 
 function mailValidation(mailVal) {
@@ -378,7 +389,9 @@ function updateButton() {
     modal.addEventListener("click", (event) => {
         if (event.target == modal) {
             modal.style.display = "none";
+            skillReset();
         }
+        console.log("abd");
     })
 }
 
@@ -387,7 +400,7 @@ function updateEmployee(id) {
     let updateBtn = document.getElementById("updateModalButton");
     let skillUpdateBox = document.getElementById("skillUpdateBox");
     let empId, empName, dsgn, dob, mail;
-    skillArray = [];
+    // skillArray = [];
     tableData.forEach((rowData) => {
         if (id == rowData.employeeId) {
             document.getElementById("empIdU").value = rowData.employeeId;
@@ -395,24 +408,34 @@ function updateEmployee(id) {
             document.getElementById("dsgnU").value = rowData.designation;
             document.getElementById("dobU").value = rowData.dateOfBirth;
             document.getElementById("mailidU").value = rowData.emailId;
-            rowData.skills.forEach((skillData) => {
-                skillArray.push(skillData.skillName);
-            })
+            // rowData.skills.forEach((skillData) => {
+            //     let skillobj = {
+            //         skillName: skillData.skillName,
+            //         skillId: skillData.skillId
+            //     }
+            //     skillArray.push(skillobj);
+            //     // skillArr.push(skillData.skillName);
+            // })
+            skillArray = JSON.parse(JSON.stringify(rowData.skills));
+            console.log(skillArray);
             skillArray.forEach(skillELement => {
                 let spanSkill = document.createElement("span");
                 let crossIcon = document.createElement("i");
-                spanSkill.innerHTML = skillELement;
+                spanSkill.innerHTML = skillELement.skillName;
                 spanSkill.setAttribute("class", "addSkillSpan");
+                spanSkill.setAttribute("id",skillELement.skillName);
                 crossIcon.setAttribute("class", "fa-solid fa-xmark");
-                crossIcon.setAttribute("id", skillELement);
+                crossIcon.setAttribute("id", skillELement.skillId);
                 spanSkill.appendChild(crossIcon);
-                crossIcon.addEventListener("click", () => {
+                crossIcon.addEventListener("click", (element) => {
                     let skill = crossIcon.getAttribute("id");
-                    if (skillArray.includes(skill)) {
-                        let index = skillArray.indexOf(skill);
-                        skillArray.splice(index, 1);
-                        spanSkill.remove();
-                    }
+                    removeSkill(element);
+                    // const filteredSkill = skillArray.filter(({skillId}) => skillId !== skill)
+                    // if (skillArray.includes(skill)) {
+                    //     let index = skillArr.indexOf(skill);
+                    //     skillArr.splice(index, 1);
+                    //     spanSkill.remove();
+                    // }
                 })
                 skillUpdateBox.prepend(spanSkill);
             })
@@ -442,8 +465,8 @@ function updateEmployee(id) {
                         rowData.skills = [];
                         skillArray.forEach((skillElement) => {
                             let skillObject = {
-                                skillName: skillElement,
-                                skillId: ""
+                                skillName: skillElement.skillName,
+                                skillId: skillElement.skillId
                             }
                             rowData.skills.push(skillObject);
                         })
@@ -456,6 +479,20 @@ function updateEmployee(id) {
         }
     })
     updateModal.style.display = "block";
+}
+
+function removeSkill(skill) {
+    console.log(skill.target);
+    console.log(skillArray);
+    const skillArrayCopy = JSON.parse(JSON.stringify(skillArray));
+    skillArrayCopy.forEach(({skillId, skillName}, i) => {
+        if(skill.target.id === skillId) {
+            skillArrayCopy.splice(i,1);
+            const skillToRemove = document.getElementById(skillName);
+            skillToRemove.remove();
+        }
+    })
+    skillArray = skillArrayCopy;
 }
 
 function skillSuggestion() {
@@ -558,7 +595,7 @@ function filterTable(value) {
     rows.forEach((row) => {
         let skillSpan = row.getElementsByClassName("skillSpan");
         let isAvailable = false;
-        for(span of skillSpan) {
+        for (span of skillSpan) {
             span.textContent.toLowerCase().startsWith(value.toLowerCase()) && (isAvailable = true)
         }
         isAvailable ? (row.style.display = "") : (row.style.display = "none");
