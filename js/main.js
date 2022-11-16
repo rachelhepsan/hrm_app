@@ -2,7 +2,6 @@ const getFromLocalStorage = (keyName) => {
     return localStorage.getItem(keyName);
 }
 
-
 let tableData = JSON.parse(getFromLocalStorage("tData"));
 let skillData = JSON.parse(getFromLocalStorage("sData"));
 let modal = document.getElementById("addModal");
@@ -121,7 +120,7 @@ const getTableData = () => {
             }
         })
         .catch(error => {
-            let parent = document.getElementById("tableBody");
+            let parent = document.getElementById("tableSection");
             let div = document.createElement("div");
             let span = document.createElement("span");
             span.innerHTML = `Error.Data not found`;
@@ -197,7 +196,7 @@ function listTables() {
             if(action[0] === "edt") {
                 updateEmployee(action[1]);
             }
-            else {
+            else if(action[0] === "del") {
                 deleteEmployee(action[1]);
             }
         })
@@ -565,3 +564,7 @@ function filterTable(value) {
         isAvailable ? (row.style.display = "") : (row.style.display = "none");
     })
 }
+
+
+
+

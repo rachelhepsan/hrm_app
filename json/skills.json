@@ -20,6 +20,10 @@
         "skillId" : "njs"
     },
     {
+        "skill" : "Vue.js",
+        "skillId" : "vjs"
+    },
+    {
         "skill" : "Python",
         "skillId" : "pyt"
     }

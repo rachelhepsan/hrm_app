@@ -5,15 +5,15 @@
         "employeeName":"Sneha",
         "designation":"Developer",
         "dateOfBirth":"1999-07-28",
-        "emailId":"ria.richard@qburst.com",
+        "emailId":"sneha@abc.com",
         "skills": [
             {
                 "skillName":"React",
-                "skillId":"re1"
+                "skillId":"rea"
             },
             {
-                "skillName":"Python",
-                "skillId":"py1"
+                "skillName":"Javascript",
+                "skillId":"js"
             }
         ]
     },
@@ -23,15 +23,15 @@
         "employeeName":"Aju",
         "designation":"Developer",
         "dateOfBirth":"1999-07-28",
-        "emailId":"ria.richard@qburst.com",
+        "emailId":"ajukrishanan@abc.com",
         "skills": [
             {
-                "skillName":"React",
-                "skillId":"re1"
+                "skillName":"Vue.js",
+                "skillId":"rea"
             },
             {
-                "skillName":"Python",
-                "skillId":"py1"
+                "skillName":"Java",
+                "skillId":"jv"
             }
         ]
     },
@@ -41,15 +41,15 @@
         "employeeName":"Rachel",
         "designation":"Developer",
         "dateOfBirth":"1999-07-28",
-        "emailId":"ria.richard@qburst.com",
+        "emailId":"rachel@xyz.com",
         "skills": [
             {
                 "skillName":"React",
-                "skillId":"re1"
+                "skillId":"rea"
             },
             {
-                "skillName":"Python",
-                "skillId":"py1"
+                "skillName":"Angular",
+                "skillId":"ang"
             }
         ]
     },
@@ -59,15 +59,15 @@
         "employeeName":"Nithin",
         "designation":"Developer",
         "dateOfBirth":"1999-07-28",
-        "emailId":"ria.richard@qburst.com",
+        "emailId":"nithin@xyz.com",
         "skills": [
             {
-                "skillName":"React",
-                "skillId":"re1"
+                "skillName":"Python",
+                "skillId":"pyt"
             },
             {
-                "skillName":"Python",
-                "skillId":"py1"
+                "skillName":"Node.js",
+                "skillId":"njs"
             }
         ]
     },
@@ -77,15 +77,15 @@
         "employeeName":"Alan P",
         "designation":"Developer",
         "dateOfBirth":"1999-07-28",
-        "emailId":"ria.richard@qburst.com",
+        "emailId":"alanp@abc.com",
         "skills": [
             {
-                "skillName":"React",
-                "skillId":"re1"
+                "skillName":"Angular",
+                "skillId":"ang"
             },
             {
                 "skillName":"Javascript",
-                "skillId":"py1"
+                "skillId":"js"
             }
         ]
     },
@@ -95,15 +95,15 @@
         "employeeName":"Vismay",
         "designation":"Developer",
         "dateOfBirth":"1999-07-28",
-        "emailId":"ria.richard@qburst.com",
+        "emailId":"vismay@abc.com",
         "skills": [
             {
-                "skillName":"React",
-                "skillId":"re1"
+                "skillName":"Node.js",
+                "skillId":"njs"
             },
             {
                 "skillName":"Javascript",
-                "skillId":"py1"
+                "skillId":"js"
             }
         ]
     }
