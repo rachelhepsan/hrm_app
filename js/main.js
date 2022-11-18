@@ -10,12 +10,14 @@ let deleteModal = document.getElementById("deleteModal");
 let skillInput = document.getElementById("skills");
 let autoSuggestion = document.getElementById("autoSuggestion");
 let skillInputBox = document.getElementById("skillInputBox");
-let spanSkill = document.createElement("span");
+let spanSkill;
 let heading = document.getElementById("popUpHeader");
 let skillArray = [];
 let skillArr = [];
 const deleteKey = "del";
 const editKey = "edt";
+let action = [];
+
 skillInput.addEventListener("input", (e) => {
     if (e.target.value !== "") {
         const similarSkill = skillData.filter(({ skill }) => skill.toLowerCase().startsWith(e.target.value.toLowerCase()));
@@ -46,11 +48,13 @@ function addEmployeeSkill(element) {
         skillId: element.target.id
     };
     skillArray.push(skillElem);
+    spanSkill = document.createElement("span");
     let crossIcon = document.createElement("i");
     spanSkill.innerHTML = element.target.innerHTML;
     spanSkill.setAttribute("class", "addSkillSpan");
+    spanSkill.setAttribute("id",element.target.innerHTML)
     crossIcon.setAttribute("class", "fa-solid fa-xmark");
-    crossIcon.setAttribute("id", element.target.innerHTML);
+    crossIcon.setAttribute("id", element.target.id);
     spanSkill.appendChild(crossIcon);
     crossIcon.addEventListener("click", (element) => {
         removeSkill(element);
@@ -126,6 +130,7 @@ submitBtn.addEventListener("click", () => {
                 dsgn = document.getElementById("dsgn").value;
                 dob = document.getElementById("dob").value;
                 mail = document.getElementById("mailid").value;
+                let id = action[1];
                 tableData.forEach((rowData) => {
                     if (id == rowData.uuid) {
                         rowData.employeeId = document.getElementById("empId").value;
@@ -234,11 +239,14 @@ function listTables() {
 
         buttonDiv.setAttribute("class", "buttonBox");
         buttonDiv.addEventListener("click", (event) => {
-            let action = event.target.id.split("-");
+            action = event.target.id.split("-");
             if (action[0] === editKey) {
                 heading.innerHTML = `Update Employee Details`;
                 modal.style.display = "block";
                 updateEmployee(action[1]);
+                // function valueReturn() {
+                //     return action[1];
+                // }
             }
             else if (action[0] === deleteKey) {
                 deleteEmployee(action[1]);
@@ -404,9 +412,6 @@ function updateEmployee(id) {
             })
         }
     })
-    // updateBtn.addEventListener("click", () => {
-
-    // }
 }
 
 function deleteButton() {
@@ -499,7 +504,3 @@ function filterTable(value) {
         isAvailable ? (row.style.display = "") : (row.style.display = "none");
     })
 }
-
-
-
-
