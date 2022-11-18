@@ -244,9 +244,6 @@ function listTables() {
                 heading.innerHTML = `Update Employee Details`;
                 modal.style.display = "block";
                 updateEmployee(action[1]);
-                // function valueReturn() {
-                //     return action[1];
-                // }
             }
             else if (action[0] === deleteKey) {
                 deleteEmployee(action[1]);
