@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/71cb3853f5.js" crossorigin="anonymous"></script>
+    <title>HRM App</title>
+</head>
+<body>
+    <header>
+        <div class="flexBox">
+            <p id="logo">HRM App</p>
+            <div class="flexBox">
+                <p class="headerMenu">HOME</p>
+                <p class="headerMenu">SERVICE</p>
+                <P class="headerMenu">CONTACT</P>
+            </div>
+        </div>
+    </header>
+    <section class="buttonSection flexBox">
+        <div>
+            <select name="sort" id="sortButton" class="hrmButtons">
+                <option value="">Sort By</option>
+                <option value="empIdSort" id="idSort">Employee Id</option>
+                <option value="empNameSort" id="nameSort">Employee Name</option>
+            </select>
+
+            <input list = "skillSuggestion" class="hrmButtons" id="filterButton" placeholder="Filter By">
+            <datalist id="skillSuggestion"></datalist>
+        </div>
+        <button class="hrmButtons" id="addButton"><i class="fa-solid fa-user-plus"></i></button>
+    </section>
+    <section id="tableSection">
+        <table id="tableOfEmployees">
+            <thead>
+                <tr>
+                    <th>Employee Id</th>
+                    <th>Employee Name</th>
+                    <th>Designation</th>
+                    <th>Date of Birth</th>
+                    <th>Email id</th>
+                    <th>Skills</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </section>
+    <div id="addModal" class="modal">
+        <div class="overlay" id="overlayDiv"></div>
+        <div class="modalContent">
+            <div class="modalHeader flexBox">
+                <p class="modalHeading" id="popUpHeader"></p>
+                <span class="close" id="addClose">&times;</span>
+            </div>
+            <form class="formBox" id="addForm">
+                <div class="label">
+                    <label for="empId">Employee ID:</label><br>
+                    <label for="empName">Employee Name:</label><br>
+                    <label for="dsgn">Designation:</label><br>
+                    <label for="dob">Date of Birth:</label><br>
+                    <label for="mailid">Email id:</label><br>
+                    <label for="skills">Skills:</label><br>
+                </div>
+                <div class="input">
+                    <input type="text" id="empId" name="Employee ID:"><br>
+                    <input type="text" id="empName" name="Employee Name:"><br>
+                    <input type="text" id="dsgn" name="Designation:"><br>
+                    <input type="date" id="dob" name="Date of Birth:"><br>
+                    <input type="text" id="mailid" name="Email id:"><br>
+                    <div id="skillBox">
+                        <div id="skillInputBox">
+                            <input type="text" id="skills" name="Skills:" placeholder size="3" autocomplete="off">
+                        </div>
+                        <div id="autoSuggestion"></div>
+                    </div>
+                </div>
+            </form>
+            <div class="modalButton">
+                <button class="hrmButtons" id="modalButton">Submit</button>
+            </div>
+        </div>
+    </div>
+    <div id="deleteModal" class="modal">
+        <div class="modalContent">
+            <div class="modalHeader flexBox">
+                <p class="modalHeading">Confirm Delete</p>
+                <span class="close" id="deleteClose">&times;</span>
+            </div>
+            <div id="deleteContentBox">
+                <p id="deleteContent">Are you sure you want to delete this profile?</p>
+            </div>
+            <div class="delBtns">
+                <button id="deleteNo">No</button>
+                <button id="deleteYes">Yes</button>
+            </div>
+        </div>
+    </div>
+    <footer id="footer"></footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

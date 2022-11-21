@@ -1,0 +1,34 @@
+[
+    {
+        "skill" : "React",
+        "skillId" : "rea"
+    },
+    {
+        "skill" : "Angular",
+        "skillId" : "ang"
+    },
+    {
+        "skill" : "Javascript",
+        "skillId" : "js"
+    },
+    {
+        "skill" : "Java",
+        "skillId" : "jv"
+    },
+    {
+        "skill" : "Django",
+        "skillId" : "dj"
+    },
+    {
+        "skill" : "Node.js",
+        "skillId" : "njs"
+    },
+    {
+        "skill" : "Vue.js",
+        "skillId" : "vjs"
+    },
+    {
+        "skill" : "Python",
+        "skillId" : "pyt"
+    }
+]
