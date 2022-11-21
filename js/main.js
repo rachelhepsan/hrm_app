@@ -10,10 +10,11 @@ let deleteModal = document.getElementById("deleteModal");
 let skillInput = document.getElementById("skills");
 let autoSuggestion = document.getElementById("autoSuggestion");
 let skillInputBox = document.getElementById("skillInputBox");
+let addForm = document.getElementById("addForm");
 let spanSkill;
 let heading = document.getElementById("popUpHeader");
 let skillArray = [];
-let skillArr = [];
+let tempSKills = [];
 const tableRows = document.getElementsByTagName("tr");
 const deleteKey = "del";
 const editKey = "edt";
@@ -29,10 +30,13 @@ skillInput.addEventListener("input", (e) => {
             div.setAttribute("id", skillId);
             div.setAttribute("class", "option");
             div.onclick = (element) => {
-                addEmployeeSkill(element);
-                skillInputBox.prepend(spanSkill);
-                skillInput.value = "";
-                autoSuggestion.style.display = "none";
+                if (!(tempSKills.includes(element.target.innerHTML))) {
+                    tempSKills.push(element.target.innerHTML);
+                    addEmployeeSkill(element);
+                    skillInputBox.prepend(spanSkill);
+                    skillInput.value = "";
+                    autoSuggestion.style.display = "none";
+                }
             }
             autoSuggestion.appendChild(div);
         })
@@ -92,6 +96,7 @@ function skillReset() {
 }
 
 submitBtn.addEventListener("click", () => {
+    tempSKills = [];
     const empId = document.getElementById("empId").value;
     const empName = document.getElementById("empName").value;
     const dsgn = document.getElementById("dsgn").value;
@@ -121,6 +126,7 @@ submitBtn.addEventListener("click", () => {
                     employee.skills.push(skillObject);
                 })
                 modal.style.display = "none";
+                addForm.reset();
                 addEmployeeData(employee);
             }
             else if (heading.innerHTML === "Update Employee Details") {
@@ -166,8 +172,8 @@ submitBtn.addEventListener("click", () => {
                                             child.innerHTML = '';
                                             skillArray.forEach((element) => {
                                                 (skillArray.length - 1) == skillArray.indexOf(element.skillName) ?
-                                                child.innerHTML += `<span>${element.skillName}</span>`:
-                                                child.innerHTML += `<span>${element.skillName} </span>`;
+                                                    child.innerHTML += `<span>${element.skillName}</span>` :
+                                                    child.innerHTML += `<span>${element.skillName} </span>`;
                                             })
                                             break;
 
@@ -180,6 +186,7 @@ submitBtn.addEventListener("click", () => {
                     }
 
                 })
+                
             }
         }
     }
@@ -304,8 +311,9 @@ function footerData() {
 function addModal() {
     let addButton = document.getElementById("addButton");
     let span = document.getElementById("addClose");
-    let addForm = document.getElementById("addForm");
+    let overlay = document.getElementById("overlayDiv");
     addButton.onclick = () => {
+        addForm.reset();
         let heading = document.getElementById("popUpHeader");
         heading.innerHTML = `Add Employee Details`;
         modal.style.display = "block";
@@ -314,10 +322,13 @@ function addModal() {
         modal.style.display = "none";
         skillReset();
         addForm.reset();
+        tempSKills = [];
     }
-    modal.addEventListener("click", (event) => {
+    overlay.addEventListener("click", (event) => {
         if (event.target == modal) {
             modal.style.display = "none";
+            addForm.reset();
+            tempSKills = [];
         }
     })
 }
@@ -327,15 +338,15 @@ function addEmployeeData(rowData) {
     localStorage.setItem("tData", JSON.stringify(tableData));
     let parent = document.getElementById("tableBody");
     const tableRow = document.createElement("tr");
-        tableRow.setAttribute("id", rowData.uuid)
-        const skillRow = document.createElement("td");
-        skillRow.setAttribute("id", `skill-${rowData.uuid}`)
-        const buttonRow = document.createElement("td");
-        const buttonDiv = document.createElement("div");
-        const editBtn = document.createElement("button");
-        const deleteBtn = document.createElement("button");
+    tableRow.setAttribute("id", rowData.uuid)
+    const skillRow = document.createElement("td");
+    skillRow.setAttribute("id", `skill-${rowData.uuid}`)
+    const buttonRow = document.createElement("td");
+    const buttonDiv = document.createElement("div");
+    const editBtn = document.createElement("button");
+    const deleteBtn = document.createElement("button");
 
-        tableRow.innerHTML = `<td id=empId-${rowData.uuid}>${rowData.employeeId}</td>
+    tableRow.innerHTML = `<td id=empId-${rowData.uuid}>${rowData.employeeId}</td>
         <td id=empName-${rowData.uuid}>${rowData.employeeName}</td>
         <td id=desgtn-${rowData.uuid}>${rowData.designation}</td>
         <td id=dob-${rowData.uuid}>${rowData.dateOfBirth}</td>
@@ -403,11 +414,13 @@ function updateButton() {
     close.onclick = () => {
         modal.style.display = "none";
         skillReset();
+        tempSKills = [];
     }
     modal.addEventListener("click", (event) => {
         if (event.target == modal) {
             modal.style.display = "none";
             skillReset();
+            tempSKills = [];
         }
     })
 }
@@ -441,6 +454,7 @@ function updateEmployee(id) {
             })
         }
     })
+                
 }
 
 function deleteButton() {
