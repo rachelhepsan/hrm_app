@@ -21,30 +21,39 @@
     </header>
     <section class="buttonSection flexBox">
         <div>
-            <button class="hrmButtons" id="sortButton">Sort by</button>
-            <input list = "skillSuggestion" class="hrmButtons" id="filterButton"/>
+            <select name="sort" id="sortButton" class="hrmButtons">
+                <option value="">Sort By</option>
+                <option value="empIdSort" id="idSort">Employee Id</option>
+                <option value="empNameSort" id="nameSort">Employee Name</option>
+            </select>
+
+            <input list = "skillSuggestion" class="hrmButtons" id="filterButton" placeholder="Filter By">
             <datalist id="skillSuggestion"></datalist>
         </div>
         <button class="hrmButtons" id="addButton"><i class="fa-solid fa-user-plus"></i></button>
     </section>
-    <section class="tableSection">
+    <section id="tableSection">
         <table id="tableOfEmployees">
-            <tr>
-                <th>Employee Id</th>
-                <th>Employee Name</th>
-                <th>Designation</th>
-                <th>Date of Birth</th>
-                <th>Email id</th>
-                <th>Skills</th>
-                <th>Actions</th>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Employee Id</th>
+                    <th>Employee Name</th>
+                    <th>Designation</th>
+                    <th>Date of Birth</th>
+                    <th>Email id</th>
+                    <th>Skills</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
         </table>
     </section>
     <div id="addModal" class="modal">
+        <div class="overlay" id="overlayDiv"></div>
         <div class="modalContent">
             <div class="modalHeader flexBox">
-                <p class="modalHeading">Add Employee Details</p>
-                <span class="close">&times;</span>
+                <p class="modalHeading" id="popUpHeader"></p>
+                <span class="close" id="addClose">&times;</span>
             </div>
             <form class="formBox" id="addForm">
                 <div class="label">
@@ -63,46 +72,29 @@
                     <input type="text" id="mailid" name="Email id:"><br>
                     <div id="skillBox">
                         <div id="skillInputBox">
-                            <input type="text" id="skills" name="Skills:">
+                            <input type="text" id="skills" name="Skills:" placeholder size="3" autocomplete="off">
                         </div>
                         <div id="autoSuggestion"></div>
                     </div>
                 </div>
             </form>
             <div class="modalButton">
-                <button class="hrmButtons" id="addModalButton">Add</button>
+                <button class="hrmButtons" id="modalButton">Submit</button>
             </div>
         </div>
-    </div>  
-    <div id="updateModal" class="modal">
+    </div>
+    <div id="deleteModal" class="modal">
         <div class="modalContent">
             <div class="modalHeader flexBox">
-                <p class="modalHeading">Update Employee Details</p>
-                <span class="close">&times;</span>
+                <p class="modalHeading">Confirm Delete</p>
+                <span class="close" id="deleteClose">&times;</span>
             </div>
-            <form class="formBox">
-                <div class="label">
-                    <label for="empIdU">Employee ID:</label><br>
-                    <label for="empNameU">Employee Name:</label><br>
-                    <label for="dsgnU">Designation:</label><br>
-                    <label for="dobU">Date of Birth:</label><br>
-                    <label for="mailidU">Email id:</label><br>
-                    <label for="skillsU">Skills:</label><br>
-                </div>
-                <div class="input">
-                    <input type="text" id="empIdU" name="Employee ID:"><br>
-                    <input type="text" id="empNameU" name="Employee Name:"><br>
-                    <input type="text" id="dsgnU" name="Designation:"><br>
-                    <input type="date" id="dobU" name="Date of Birth:"><br>
-                    <input type="text" id="mailidU" name="Email id:"><br>
-                    <div id="skillUpdateBox">
-                        <input type="text" id="skillsU" name="Skills:" placeholder size="3">
-                    </div>
-                    <div id="autoSuggestionUpdate"></div>
-                </div>
-            </form>
-            <div class="modalButton">
-                <button class="hrmButtons" id="updateModalButton">Update</button>
+            <div id="deleteContentBox">
+                <p id="deleteContent">Are you sure you want to delete this profile?</p>
+            </div>
+            <div class="delBtns">
+                <button id="deleteNo">No</button>
+                <button id="deleteYes">Yes</button>
             </div>
         </div>
     </div>

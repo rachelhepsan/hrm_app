@@ -16,8 +16,16 @@
         "skillId" : "jv"
     },
     {
+        "skill" : "Django",
+        "skillId" : "dj"
+    },
+    {
         "skill" : "Node.js",
         "skillId" : "njs"
+    },
+    {
+        "skill" : "Vue.js",
+        "skillId" : "vjs"
     },
     {
         "skill" : "Python",
