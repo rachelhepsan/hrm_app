@@ -14,6 +14,7 @@ let spanSkill;
 let heading = document.getElementById("popUpHeader");
 let skillArray = [];
 let skillArr = [];
+const tableRows = document.getElementsByTagName("tr");
 const deleteKey = "del";
 const editKey = "edt";
 let action = [];
@@ -52,7 +53,7 @@ function addEmployeeSkill(element) {
     let crossIcon = document.createElement("i");
     spanSkill.innerHTML = element.target.innerHTML;
     spanSkill.setAttribute("class", "addSkillSpan");
-    spanSkill.setAttribute("id",element.target.innerHTML)
+    spanSkill.setAttribute("id", element.target.innerHTML)
     crossIcon.setAttribute("class", "fa-solid fa-xmark");
     crossIcon.setAttribute("id", element.target.id);
     spanSkill.appendChild(crossIcon);
@@ -91,19 +92,17 @@ function skillReset() {
 }
 
 submitBtn.addEventListener("click", () => {
-    let empId = document.getElementById("empId").value;
-    let empName = document.getElementById("empName").value;
-    let dsgn = document.getElementById("dsgn").value;
-    let dob = document.getElementById("dob").value;
-    let mail = document.getElementById("mailid").value;
-    console.log(empId);
+    const empId = document.getElementById("empId").value;
+    const empName = document.getElementById("empName").value;
+    const dsgn = document.getElementById("dsgn").value;
+    const dob = document.getElementById("dob").value;
+    const mail = document.getElementById("mailid").value;
     if (empId == "" || empName == "" || dsgn == "" || dob == "" || mail == "") {
         alert("Enter all input fields");
     }
     else {
         let isValidMail = mailValidation(mail);
         if (isValidMail) {
-            console.log(heading.innerHTML);
             if (heading.innerHTML === "Add Employee Details") {
                 let employee = {
                     employeeId: empId,
@@ -125,12 +124,7 @@ submitBtn.addEventListener("click", () => {
                 addEmployeeData(employee);
             }
             else if (heading.innerHTML === "Update Employee Details") {
-                empId = document.getElementById("empId").value;
-                empName = document.getElementById("empName").value;
-                dsgn = document.getElementById("dsgn").value;
-                dob = document.getElementById("dob").value;
-                mail = document.getElementById("mailid").value;
-                let id = action[1];
+                const id = action[1];
                 tableData.forEach((rowData) => {
                     if (id == rowData.uuid) {
                         rowData.employeeId = document.getElementById("empId").value;
@@ -148,7 +142,41 @@ submitBtn.addEventListener("click", () => {
                         })
                         localStorage.setItem("tData", JSON.stringify(tableData));
                         modal.style.display = "none";
-                        window.location.reload();
+                        for (row of tableRows) {
+                            if (id === row.id) {
+                                for (child of row.children) {
+                                    const fieldType = child.id.split("-")[0];
+                                    switch (fieldType) {
+                                        case "empId":
+                                            child.innerHTML = empId;
+                                            break;
+                                        case "empName":
+                                            child.innerHTML = empName;
+                                            break;
+                                        case "desgtn":
+                                            child.innerHTML = dsgn;
+                                            break;
+                                        case "dob":
+                                            child.innerHTML = dob;
+                                            break;
+                                        case "emailId":
+                                            child.innerHTML = mail;
+                                            break;
+                                        case "skill":
+                                            child.innerHTML = '';
+                                            skillArray.forEach((element) => {
+                                                (skillArray.length - 1) == skillArray.indexOf(element.skillName) ?
+                                                child.innerHTML += `<span>${element.skillName}</span>`:
+                                                child.innerHTML += `<span>${element.skillName} </span>`;
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+                        }
                     }
 
                 })
@@ -211,17 +239,19 @@ function listTables() {
     let parent = document.getElementById("tableBody");
     tableData.forEach((rowData) => {
         const tableRow = document.createElement("tr");
+        tableRow.setAttribute("id", rowData.uuid)
         const skillRow = document.createElement("td");
+        skillRow.setAttribute("id", `skill-${rowData.uuid}`)
         const buttonRow = document.createElement("td");
         const buttonDiv = document.createElement("div");
         const editBtn = document.createElement("button");
         const deleteBtn = document.createElement("button");
 
-        tableRow.innerHTML = `<td>${rowData.employeeId}</td>
-        <td>${rowData.employeeName}</td>
-        <td>${rowData.designation}</td>
-        <td>${rowData.dateOfBirth}</td>
-        <td>${rowData.emailId}</td>`;
+        tableRow.innerHTML = `<td id=empId-${rowData.uuid}>${rowData.employeeId}</td>
+        <td id=empName-${rowData.uuid}>${rowData.employeeName}</td>
+        <td id=desgtn-${rowData.uuid}>${rowData.designation}</td>
+        <td id=dob-${rowData.uuid}>${rowData.dateOfBirth}</td>
+        <td id=emailId-${rowData.uuid}>${rowData.emailId}</td>`;
 
         rowData.skills.forEach((skillData) => {
             const spanTag = document.createElement("span");
@@ -297,17 +327,19 @@ function addEmployeeData(rowData) {
     localStorage.setItem("tData", JSON.stringify(tableData));
     let parent = document.getElementById("tableBody");
     const tableRow = document.createElement("tr");
-    const skillRow = document.createElement("td");
-    const buttonRow = document.createElement("td");
-    const buttonDiv = document.createElement("div");
-    const editBtn = document.createElement("button");
-    const deleteBtn = document.createElement("button");
+        tableRow.setAttribute("id", rowData.uuid)
+        const skillRow = document.createElement("td");
+        skillRow.setAttribute("id", `skill-${rowData.uuid}`)
+        const buttonRow = document.createElement("td");
+        const buttonDiv = document.createElement("div");
+        const editBtn = document.createElement("button");
+        const deleteBtn = document.createElement("button");
 
-    tableRow.innerHTML = `<td>${rowData.employeeId}</td>
-        <td>${rowData.employeeName}</td>
-        <td>${rowData.designation}</td>
-        <td>${rowData.dateOfBirth}</td>
-        <td>${rowData.emailId}</td>`;
+        tableRow.innerHTML = `<td id=empId-${rowData.uuid}>${rowData.employeeId}</td>
+        <td id=empName-${rowData.uuid}>${rowData.employeeName}</td>
+        <td id=desgtn-${rowData.uuid}>${rowData.designation}</td>
+        <td id=dob-${rowData.uuid}>${rowData.dateOfBirth}</td>
+        <td id=emailId-${rowData.uuid}>${rowData.emailId}</td>`;
 
     rowData.skills.forEach((skillData) => {
         const spanTag = document.createElement("span");
@@ -442,6 +474,11 @@ function deleteEmployee(id) {
                 localStorage.setItem("tData", JSON.stringify(tableData));
                 listTables();
                 window.location.reload();
+                for (row of tableRows) {
+                    if (id === row.id) {
+                        row.remove();
+                    }
+                }
             }
         });
     })
