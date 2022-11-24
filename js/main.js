@@ -234,7 +234,7 @@ function initData() {
         listTables();
     }
     getSkillData();
-    footerData();
+    // footerData();
     addModal();
     updateButton();
     deleteButton();
@@ -299,11 +299,11 @@ function listTables() {
 }
 
 function footerData() {
-    const parent = document.getElementById("footer");
+    const parent = document.getElementById("copyright");
     const date = new Date();
     const year = date.getFullYear();
     let pTag = document.createElement("p");
-    pTag.innerHTML = `Copyright @ ${year} <span>HRM App</span>, All Rights Reserved`;
+    pTag.innerHTML = `Copyright @ ${year} HRM App, All Rights Reserved`;
     pTag.setAttribute("class", "footerLogo");
     parent.appendChild(pTag);
 }
@@ -311,7 +311,7 @@ function footerData() {
 function addModal() {
     let addButton = document.getElementById("addButton");
     let span = document.getElementById("addClose");
-    let overlay = document.getElementById("overlayDiv");
+    let cancelButton = document.getElementById("cancelButton");
     addButton.onclick = () => {
         addForm.reset();
         let heading = document.getElementById("popUpHeader");
@@ -324,13 +324,12 @@ function addModal() {
         addForm.reset();
         tempSKills = [];
     }
-    overlay.addEventListener("click", (event) => {
-        if (event.target == modal) {
-            modal.style.display = "none";
-            addForm.reset();
-            tempSKills = [];
-        }
-    })
+    cancelButton.onclick = () => {
+        modal.style.display = "none";
+        skillReset();
+        addForm.reset();
+        tempSKills = [];
+    }
 }
 
 function addEmployeeData(rowData) {
@@ -458,22 +457,22 @@ function updateEmployee(id) {
 }
 
 function deleteButton() {
-    let modal = document.getElementById("deleteModal");
+    let deleteModal = document.getElementById("deleteModal");
     let noBtn = document.getElementById("deleteNo");
     let yesBtn = document.getElementById("deleteYes");
     let deleteClose = document.getElementById("deleteClose");
     deleteClose.onclick = () => {
-        modal.style.display = "none";
+        deleteModal.style.display = "none";
     }
     noBtn.onclick = () => {
-        modal.style.display = "none";
+        deleteModal.style.display = "none";
     }
     yesBtn.onclick = () => {
-        modal.style.display = "none";
+        deleteModal.style.display = "none";
     }
-    modal.addEventListener("click", (event) => {
+    deleteModal.addEventListener("click", (event) => {
         if (event.target == modal) {
-            modal.style.display = "none";
+            deleteModal.style.display = "none";
         }
     })
 }

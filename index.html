@@ -5,13 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./images/hrm-icon.png" type="image/x-icon">
     <script src="https://kit.fontawesome.com/71cb3853f5.js" crossorigin="anonymous"></script>
     <title>HRM App</title>
 </head>
 <body>
     <header>
         <div class="flexBox">
-            <p id="logo">HRM App</p>
+            <p class="logo">HRM App</p>
             <div class="flexBox">
                 <p class="headerMenu">HOME</p>
                 <p class="headerMenu">SERVICE</p>
@@ -19,37 +20,38 @@
             </div>
         </div>
     </header>
-    <section class="buttonSection flexBox">
-        <div>
-            <select name="sort" id="sortButton" class="hrmButtons">
-                <option value="">Sort By</option>
-                <option value="empIdSort" id="idSort">Employee Id</option>
-                <option value="empNameSort" id="nameSort">Employee Name</option>
-            </select>
-
-            <input list = "skillSuggestion" class="hrmButtons" id="filterButton" placeholder="Filter By">
-            <datalist id="skillSuggestion"></datalist>
-        </div>
-        <button class="hrmButtons" id="addButton"><i class="fa-solid fa-user-plus"></i></button>
-    </section>
-    <section id="tableSection">
-        <table id="tableOfEmployees">
-            <thead>
-                <tr>
-                    <th>Employee Id</th>
-                    <th>Employee Name</th>
-                    <th>Designation</th>
-                    <th>Date of Birth</th>
-                    <th>Email id</th>
-                    <th>Skills</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
+    <section class="globalWidth">
+        <section class="buttonSection flexBox">
+            <div>
+                <select name="sort" id="sortButton" class="hrmButtons">
+                    <option value="">Sort By</option>
+                    <option value="empIdSort" id="idSort">Employee Id</option>
+                    <option value="empNameSort" id="nameSort">Employee Name</option>
+                </select>
+    
+                <input list = "skillSuggestion" class="hrmButtons" id="filterButton" placeholder="Filter By Skills">
+                <datalist id="skillSuggestion"></datalist>
+            </div>
+            <button class="hrmButtons" id="addButton"><i class="fa-solid fa-user-plus"></i></button>
+        </section>
+        <section id="tableSection">
+            <table id="tableOfEmployees">
+                <thead>
+                    <tr>
+                        <th>Employee Id</th>
+                        <th>Employee Name</th>
+                        <th>Designation</th>
+                        <th>Date of Birth</th>
+                        <th>Email id</th>
+                        <th>Skills</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </section>
     </section>
     <div id="addModal" class="modal">
-        <div class="overlay" id="overlayDiv"></div>
         <div class="modalContent">
             <div class="modalHeader flexBox">
                 <p class="modalHeading" id="popUpHeader"></p>
@@ -68,7 +70,7 @@
                     <input type="text" id="empId" name="Employee ID:"><br>
                     <input type="text" id="empName" name="Employee Name:"><br>
                     <input type="text" id="dsgn" name="Designation:"><br>
-                    <input type="date" id="dob" name="Date of Birth:"><br>
+                    <input type="date" id="dob" name="Date of Birth:" max="2001-12-31"><br>
                     <input type="text" id="mailid" name="Email id:"><br>
                     <div id="skillBox">
                         <div id="skillInputBox">
@@ -79,7 +81,8 @@
                 </div>
             </form>
             <div class="modalButton">
-                <button class="hrmButtons" id="modalButton">Submit</button>
+                <button id="cancelButton">Cancel</button>
+                <button id="modalButton">Submit</button>
             </div>
         </div>
     </div>
@@ -98,7 +101,9 @@
             </div>
         </div>
     </div>
-    <footer id="footer"></footer>
+    <!-- <footer id="footer">
+        <div id="copyright"></div>
+    </footer> -->
     <script src="js/main.js"></script>
 </body>
 </html>

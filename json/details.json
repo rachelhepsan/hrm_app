@@ -74,10 +74,10 @@
     {
         "employeeId":"1005",
         "uuid":"emp852",
-        "employeeName":"Alan P",
+        "employeeName":"Alen P",
         "designation":"Developer",
         "dateOfBirth":"1999-07-28",
-        "emailId":"alanp@abc.com",
+        "emailId":"alenp@abc.com",
         "skills": [
             {
                 "skillName":"Angular",
