@@ -97,6 +97,7 @@ function skillReset() {
 
 submitBtn.addEventListener("click", () => {
     tempSKills = [];
+    
     const empId = document.getElementById("empId").value;
     const empName = document.getElementById("empName").value;
     const dsgn = document.getElementById("dsgn").value;
@@ -176,7 +177,6 @@ submitBtn.addEventListener("click", () => {
                                                     child.innerHTML += `<span>${element.skillName} </span>`;
                                             })
                                             break;
-
                                         default:
                                             break;
                                     }
@@ -184,12 +184,11 @@ submitBtn.addEventListener("click", () => {
                             }
                         }
                     }
-
-                })
-                
+                }) 
             }
         }
     }
+    skillReset();
 })
 
 const getTableData = () => {
@@ -453,11 +452,10 @@ function updateEmployee(id) {
             })
         }
     })
-                
+    modal.style.display = "block";           
 }
 
 function deleteButton() {
-    let deleteModal = document.getElementById("deleteModal");
     let noBtn = document.getElementById("deleteNo");
     let yesBtn = document.getElementById("deleteYes");
     let deleteClose = document.getElementById("deleteClose");
