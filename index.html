@@ -24,9 +24,9 @@
         <section class="buttonSection flexBox">
             <div>
                 <select name="sort" id="sortButton" class="hrmButtons">
-                    <option value="">Sort By</option>
-                    <option value="empIdSort" id="idSort">Employee Id</option>
-                    <option value="empNameSort" id="nameSort">Employee Name</option>
+                    <!-- <option value="">Sort By</option> -->
+                    <option value="empIdSort" selected id="idSort">Sort By Employee Id</option>
+                    <option value="empNameSort" id="nameSort">Sort By Employee Name</option>
                 </select>
     
                 <input list = "skillSuggestion" class="hrmButtons" id="filterButton" placeholder="Filter By Skills">
@@ -47,7 +47,9 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody"></tbody>
+                <tbody id="tableBody">
+                    
+                </tbody>
             </table>
         </section>
     </section>

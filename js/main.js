@@ -21,6 +21,8 @@ const editKey = "edt";
 let action = [];
 
 skillInput.addEventListener("input", (e) => {
+    tempSKills=[];
+    
     if (e.target.value !== "") {
         const similarSkill = skillData.filter(({ skill }) => skill.toLowerCase().startsWith(e.target.value.toLowerCase()));
         autoSuggestion.innerHTML = "";
@@ -45,6 +47,7 @@ skillInput.addEventListener("input", (e) => {
     else {
         autoSuggestion.style.display = "none";
     }
+    // skillArray=[];
 })
 
 function addEmployeeSkill(element) {
@@ -96,8 +99,6 @@ function skillReset() {
 }
 
 submitBtn.addEventListener("click", () => {
-    tempSKills = [];
-    
     const empId = document.getElementById("empId").value;
     const empName = document.getElementById("empName").value;
     const dsgn = document.getElementById("dsgn").value;
@@ -233,7 +234,6 @@ function initData() {
         listTables();
     }
     getSkillData();
-    // footerData();
     addModal();
     updateButton();
     deleteButton();
@@ -483,8 +483,6 @@ function deleteEmployee(id) {
                 const index = tableData.indexOf(rowData);
                 tableData.splice(index, 1);
                 localStorage.setItem("tData", JSON.stringify(tableData));
-                listTables();
-                window.location.reload();
                 for (row of tableRows) {
                     if (id === row.id) {
                         row.remove();
@@ -498,24 +496,24 @@ function deleteEmployee(id) {
 
 function sortTable() {
     let sortSelect = document.getElementById("sortButton");
-    let value;
-    sortSelect.addEventListener("change", () => {
+    let value = sortSelect.value;
+    checkSelect();
+    sortSelect.addEventListener("change", checkSelect);
+    function checkSelect() {
         value = sortSelect.value;
         value === "empIdSort" ? sortById() : sortByName();
-        window.location.reload();
-    })
+    }
 }
 
 function sortById() {
-    let tableData = JSON.parse(localStorage.getItem("tData"));
     tableData.sort((a, b) => {
         return a.employeeId - b.employeeId;
     });
     localStorage.setItem("tData", JSON.stringify(tableData));
+    tableReload();
 }
 
 function sortByName() {
-    let tableData = JSON.parse(localStorage.getItem("tData"));
     tableData.sort((a, b) => {
         let ea = a.employeeName.toLowerCase(),
             eb = b.employeeName.toLowerCase();
@@ -528,8 +526,16 @@ function sortByName() {
         return 0;
     });
     localStorage.setItem("tData", JSON.stringify(tableData));
+    tableReload();
 }
 
+function tableReload() {
+    let tableBody = document.getElementById("tableBody");
+    while (tableBody.firstChild) {
+        tableBody.removeChild(tableBody.firstChild);
+    }
+    listTables();
+}
 
 function filter() {
     let filterButton = document.getElementById("filterButton");
@@ -549,3 +555,19 @@ function filterTable(value) {
         isAvailable ? (row.style.display = "") : (row.style.display = "none");
     })
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

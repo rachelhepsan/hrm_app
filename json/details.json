@@ -17,24 +17,7 @@
             }
         ]
     },
-    {
-        "employeeId":"1002",
-        "uuid":"emp456",
-        "employeeName":"Aju",
-        "designation":"Developer",
-        "dateOfBirth":"1999-07-28",
-        "emailId":"ajukrishanan@abc.com",
-        "skills": [
-            {
-                "skillName":"Vue.js",
-                "skillId":"rea"
-            },
-            {
-                "skillName":"Java",
-                "skillId":"jv"
-            }
-        ]
-    },
+    
     {
         "employeeId":"1003",
         "uuid":"emp789",
@@ -72,23 +55,24 @@
         ]
     },
     {
-        "employeeId":"1005",
-        "uuid":"emp852",
-        "employeeName":"Alen P",
+        "employeeId":"1002",
+        "uuid":"emp456",
+        "employeeName":"Aju",
         "designation":"Developer",
         "dateOfBirth":"1999-07-28",
-        "emailId":"alenp@abc.com",
+        "emailId":"ajukrishanan@abc.com",
         "skills": [
             {
-                "skillName":"Angular",
-                "skillId":"ang"
+                "skillName":"Vue.js",
+                "skillId":"rea"
             },
             {
-                "skillName":"Javascript",
-                "skillId":"js"
+                "skillName":"Java",
+                "skillId":"jv"
             }
         ]
     },
+    
     {
         "employeeId":"1006",
         "uuid":"emp741",
@@ -100,6 +84,24 @@
             {
                 "skillName":"Node.js",
                 "skillId":"njs"
+            },
+            {
+                "skillName":"Javascript",
+                "skillId":"js"
+            }
+        ]
+    },
+    {
+        "employeeId":"1005",
+        "uuid":"emp852",
+        "employeeName":"Alen P",
+        "designation":"Developer",
+        "dateOfBirth":"1999-07-28",
+        "emailId":"alenp@abc.com",
+        "skills": [
+            {
+                "skillName":"Angular",
+                "skillId":"ang"
             },
             {
                 "skillName":"Javascript",

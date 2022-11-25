@@ -24,6 +24,14 @@
         "skillId" : "njs"
     },
     {
+        "skill" : "Html",
+        "skillId" : "ht"
+    },
+    {
+        "skill" : "Css",
+        "skillId" : "cs"
+    },
+    {
         "skill" : "Vue.js",
         "skillId" : "vjs"
     },
