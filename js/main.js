@@ -190,6 +190,7 @@ submitBtn.addEventListener("click", () => {
         }
     }
     skillReset();
+    skillArray = [];
 })
 
 const getTableData = () => {
