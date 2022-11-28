@@ -198,6 +198,8 @@ const getTableData = () => {
         .then(data => {
             if (Array.isArray(data) && data.length) {
                 localStorage.setItem("tData", JSON.stringify(data));
+                tableData = JSON.parse(getFromLocalStorage("tData"));
+                sortTable();
                 listTables();
             }
             else {
@@ -227,17 +229,18 @@ const getSkillData = () => {
 initData();
 
 function initData() {
-    if (!(localStorage.getItem("tData"))) {
+    const data = JSON.parse(getFromLocalStorage("tData"));
+    if (!data || data.length === 0) {
         getTableData();
     }
     else {
+        sortTable();
         listTables();
     }
     getSkillData();
     addModal();
     updateButton();
     deleteButton();
-    sortTable();
     filter();
 }
 
@@ -354,7 +357,7 @@ function addEmployeeData(rowData) {
 
     buttonDiv.setAttribute("class", "buttonBox");
     buttonDiv.addEventListener("click", (event) => {
-        let action = event.target.id.split("-");
+        action = event.target.id.split("-");
         if (action[0] === "edt") {
             let heading = document.getElementById("popUpHeader");
             heading.innerHTML = `Update Employee Details`;
@@ -520,9 +523,10 @@ function sortByName() {
 
 function tableReload() {
     let tableBody = document.getElementById("tableBody");
-    while (tableBody.firstChild) {
-        tableBody.removeChild(tableBody.firstChild);
-    }
+    tableBody.innerHTML = "";
+    // while (tableBody.firstChild) {
+    //     tableBody.removeChild(tableBody.firstChild);
+    // }
     listTables();
 }
 

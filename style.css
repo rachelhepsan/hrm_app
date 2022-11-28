@@ -234,6 +234,7 @@ input {
     height: 30px;
     border: 1px solid #000;
     border-radius: 15px;
+    padding: 10px;
 }
 
 .formBox {
