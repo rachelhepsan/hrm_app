@@ -21,8 +21,7 @@ const editKey = "edt";
 let action = [];
 
 skillInput.addEventListener("input", (e) => {
-    tempSKills=[];
-    
+    tempSKills = [];
     if (e.target.value !== "") {
         const similarSkill = skillData.filter(({ skill }) => skill.toLowerCase().startsWith(e.target.value.toLowerCase()));
         autoSuggestion.innerHTML = "";
@@ -47,7 +46,6 @@ skillInput.addEventListener("input", (e) => {
     else {
         autoSuggestion.style.display = "none";
     }
-    // skillArray=[];
 })
 
 function addEmployeeSkill(element) {
@@ -129,6 +127,7 @@ submitBtn.addEventListener("click", () => {
                 })
                 modal.style.display = "none";
                 addForm.reset();
+                skillReset();
                 addEmployeeData(employee);
             }
             else if (heading.innerHTML === "Update Employee Details") {
@@ -149,7 +148,6 @@ submitBtn.addEventListener("click", () => {
                             rowData.skills.push(skillObject);
                         })
                         localStorage.setItem("tData", JSON.stringify(tableData));
-                        modal.style.display = "none";
                         for (row of tableRows) {
                             if (id === row.id) {
                                 for (child of row.children) {
@@ -185,12 +183,13 @@ submitBtn.addEventListener("click", () => {
                             }
                         }
                     }
-                }) 
+                })
+                modal.style.display = "none";
+                skillReset();
+                skillArray = [];
             }
         }
     }
-    skillReset();
-    skillArray = [];
 })
 
 const getTableData = () => {
@@ -279,7 +278,6 @@ function listTables() {
             action = event.target.id.split("-");
             if (action[0] === editKey) {
                 heading.innerHTML = `Update Employee Details`;
-                modal.style.display = "block";
                 updateEmployee(action[1]);
             }
             else if (action[0] === deleteKey) {
@@ -296,16 +294,6 @@ function listTables() {
         tableRow.appendChild(buttonRow);
         parent.appendChild(tableRow);
     });
-}
-
-function footerData() {
-    const parent = document.getElementById("copyright");
-    const date = new Date();
-    const year = date.getFullYear();
-    let pTag = document.createElement("p");
-    pTag.innerHTML = `Copyright @ ${year} HRM App, All Rights Reserved`;
-    pTag.setAttribute("class", "footerLogo");
-    parent.appendChild(pTag);
 }
 
 function addModal() {
@@ -453,7 +441,7 @@ function updateEmployee(id) {
             })
         }
     })
-    modal.style.display = "block";           
+    modal.style.display = "block";
 }
 
 function deleteButton() {

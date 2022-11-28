@@ -12,7 +12,6 @@ button {
 
 header {
     width: 100%;
-    /* background-color: #075E54; */
     background: url(./images/header_image.jpg);
     height: 100px;
     margin: 0 auto;
@@ -209,7 +208,6 @@ tr {
 
 .modalHeader {
     height: 80px;
-    /* background-color: #075E54; */
     background: url(./images/header_image.jpg);
     margin-bottom: 30px;
 }
@@ -301,7 +299,6 @@ input {
     position: relative;
     max-width: 270px;
     width: 100%;
-    /* background-color: #fff; */
 }
 
 #autoSuggestion {
