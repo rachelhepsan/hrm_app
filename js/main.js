@@ -21,10 +21,8 @@ const editKey = "edt";
 let action = [];
 
 skillInput.addEventListener("input", (e) => {
-    tempSKills = [];
     if (e.target.value !== "") {
         skillData = JSON.parse(getFromLocalStorage("sData"));
-        console.log(skillData)
         const similarSkill = skillData.filter(({ skill }) => skill.toLowerCase().startsWith(e.target.value.toLowerCase()));
         autoSuggestion.innerHTML = "";
         similarSkill.forEach(({ skill, skillId }) => {
@@ -48,6 +46,7 @@ skillInput.addEventListener("input", (e) => {
     else {
         autoSuggestion.style.display = "none";
     }
+    
 })
 
 function addEmployeeSkill(element) {
@@ -190,6 +189,7 @@ submitBtn.addEventListener("click", () => {
                 modal.style.display = "none";
                 skillReset();
                 skillArray = [];
+                tempSKills = [];
             }
         }
     }
@@ -240,7 +240,6 @@ function initData() {
     }
     getSkillData();
     addModal();
-    updateButton();
     deleteButton();
     filter();
 }
@@ -322,6 +321,13 @@ function addModal() {
         addForm.reset();
         tempSKills = [];
     }
+    modal.addEventListener("click", (event) => {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            skillReset();
+            tempSKills = [];
+        }
+    })
 }
 
 function addEmployeeData(rowData) {
@@ -400,22 +406,6 @@ function mailValidation(mailVal) {
     }
 }
 
-function updateButton() {
-    let close = document.getElementById("addClose");
-    close.onclick = () => {
-        modal.style.display = "none";
-        skillReset();
-        tempSKills = [];
-    }
-    modal.addEventListener("click", (event) => {
-        if (event.target == modal) {
-            modal.style.display = "none";
-            skillReset();
-            tempSKills = [];
-        }
-    })
-}
-
 
 function updateEmployee(id) {
     let skillUpdateBox = document.getElementById("skillInputBox");
@@ -430,6 +420,7 @@ function updateEmployee(id) {
 
             skillArray = JSON.parse(JSON.stringify(rowData.skills));
             skillArray.forEach(skillELement => {
+                tempSKills.push(skillELement.skillName);
                 let spanSkill = document.createElement("span");
                 let crossIcon = document.createElement("i");
                 spanSkill.innerHTML = skillELement.skillName;
