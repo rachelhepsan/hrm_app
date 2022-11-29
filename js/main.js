@@ -23,6 +23,8 @@ let action = [];
 skillInput.addEventListener("input", (e) => {
     tempSKills = [];
     if (e.target.value !== "") {
+        skillData = JSON.parse(getFromLocalStorage("sData"));
+        console.log(skillData)
         const similarSkill = skillData.filter(({ skill }) => skill.toLowerCase().startsWith(e.target.value.toLowerCase()));
         autoSuggestion.innerHTML = "";
         similarSkill.forEach(({ skill, skillId }) => {
@@ -128,6 +130,7 @@ submitBtn.addEventListener("click", () => {
                 modal.style.display = "none";
                 addForm.reset();
                 skillReset();
+                skillArray = [];
                 addEmployeeData(employee);
             }
             else if (heading.innerHTML === "Update Employee Details") {
@@ -199,8 +202,7 @@ const getTableData = () => {
             if (Array.isArray(data) && data.length) {
                 localStorage.setItem("tData", JSON.stringify(data));
                 tableData = JSON.parse(getFromLocalStorage("tData"));
-                sortTable();
-                listTables();
+                initSortedTable();
             }
             else {
                 alert("no data");
@@ -234,8 +236,7 @@ function initData() {
         getTableData();
     }
     else {
-        sortTable();
-        listTables();
+        initSortedTable();
     }
     getSkillData();
     addModal();
@@ -486,7 +487,7 @@ function deleteEmployee(id) {
     deleteModal.style.display = "block";
 }
 
-function sortTable() {
+function initSortedTable() {
     let sortSelect = document.getElementById("sortButton");
     let value = sortSelect.value;
     checkSelect();
@@ -524,9 +525,6 @@ function sortByName() {
 function tableReload() {
     let tableBody = document.getElementById("tableBody");
     tableBody.innerHTML = "";
-    // while (tableBody.firstChild) {
-    //     tableBody.removeChild(tableBody.firstChild);
-    // }
     listTables();
 }
 
