@@ -70,14 +70,18 @@ function addEmployeeSkill(element) {
 
 function removeSkill(skill) {
     const skillArrayCopy = JSON.parse(JSON.stringify(skillArray));
+    let removedSkill, indexOfRemovedSkill;
     skillArrayCopy.forEach(({ skillId, skillName }, i) => {
         if (skill.target.id === skillId) {
             skillArrayCopy.splice(i, 1);
             const skillToRemove = document.getElementById(skillName);
             skillToRemove.remove();
+            removedSkill = skillName;
         }
     })
     skillArray = skillArrayCopy;
+    indexOfRemovedSkill = tempSKills.indexOf(removedSkill);
+    tempSKills.splice(indexOfRemovedSkill,1);
 }
 
 function skillSuggestion() {
